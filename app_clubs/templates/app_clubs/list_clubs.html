@@ -1,0 +1,11 @@
+{% extends 'app_clubs/base/base.html' %}
+{% block content %}
+    <br><br>
+    <div class="container">
+    {% for club in clubs %}
+        <h1>{{ club.title }}</h1>
+        <a href="{% url 'app_clubs:join_club' club_slug=club.slug %}">Перейти</a>
+        <hr>
+    {% endfor %}
+    </div>
+{% endblock %}
