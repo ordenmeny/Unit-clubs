@@ -10,3 +10,12 @@ class Club(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class ModelPost(models.Model):
+    title = models.CharField(max_length=128, verbose_name='Заголовок')
+    slug = models.SlugField(max_length=128, db_index=True, null=False, blank=True, unique=True)
+    text = models.TextField(blank=True, null=True, verbose_name='Текст')
+
+    def __str__(self):
+        return self.title

@@ -14,14 +14,10 @@ class CreateClub(DataMixin, CreateView):
     template_name = 'app_clubs/create_club.html'
     item_selected = 'create_club'
 
-    # def get_context_data(self, **kwargs):
-    #     return super().get_context_data(**kwargs)
-
     def get_success_url(self):
         return reverse_lazy('app_clubs:create_club')
 
     def form_valid(self, form):
-        # print(form.instance.slug)
         form.instance.slug = slugify(form.instance.title)
         return super().form_valid(form)
 
@@ -55,3 +51,18 @@ class ListClubs(DataMixin, ListView):
     model = Club
     template_name = 'app_clubs/list_clubs.html'
     item_selected = 'list_clubs'
+
+
+class CreatePost(CreateClub):
+    model = ModelPost
+    form_class = FormPost
+    template_name = 'app_clubs/create_post.html'
+    item_selected = 'create_post'
+
+    def get_success_url(self):
+        return reverse_lazy('app_clubs:create_post')
+
+    def form_valid(self, form):
+        form.instance.title = slugify(form.instance.title)
+        return super().form_valid(form)
+

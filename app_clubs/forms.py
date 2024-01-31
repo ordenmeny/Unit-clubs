@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 
-from app_clubs.models import Club
+from app_clubs.models import *
 
 
 class ClubForm(ModelForm):
@@ -13,3 +13,9 @@ class FormJoinClub(ModelForm):
     class Meta:
         model = Club
         fields = []
+
+
+class FormPost(ModelForm):
+    class Meta:
+        model = ModelPost
+        fields = ['title', 'text']
