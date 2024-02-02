@@ -1,16 +1,9 @@
 {% extends 'app_clubs/base/base.html' %}
 {% load static %}
-
+{% load club_tags %}
 {% block content %}
 
-    <div class="container-photo"
-         style="background-image: url('{% static 'app_clubs/images/main_page.png' %}') !important;">
-        <div style="" class="container-photo-text container">
-            <p class="" style="font-weight: 400; line-height: 1;">Помогаем <br> организовывать <br> клубную<br>
-                деятельность</p>
-        </div>
-    </div>
-
+{% show_main_img '596' %}
     <div class="container-fluid" style="border-bottom: 1px solid #101820">
         <div class="row">
             <div class="col-lg-6" style="border-right: 1px solid #101820;">

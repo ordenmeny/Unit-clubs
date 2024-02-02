@@ -1,0 +1,21 @@
+{% load static %}
+{#<div class="container-photo"#}
+{#         style="background-image: url('{% static 'app_clubs/images/main_page.png' %}') !important;">#}
+{#        <div style="" class="container-photo-text container">#}
+{#            <p class="" style="height: {{ height_img }}px !important; font-weight: 400; line-height: 1;">Помогаем <br> организовывать <br> клубную<br>#}
+{#                деятельность</p>#}
+{#        </div>#}
+{#</div>#}
+
+<div class="container-photo"
+     style="height:{{ height_img }}px; background-image: url('{% static 'app_clubs/images/main_page.png' %}') !important; width: 100%">
+    <div style="" class="container-photo-text container">
+        {% if title %}
+            <p class="" style="font-weight: 400; line-height: 1;">{{ title }}</p>
+        {% else %}
+
+            <p class="" style="font-weight: 400; line-height: 1;">Помогаем <br> организовывать <br> клубную<br>
+                деятельность</p>
+        {% endif %}
+    </div>
+</div>

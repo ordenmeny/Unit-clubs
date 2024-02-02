@@ -1,11 +1,30 @@
 {% extends 'app_clubs/base/base.html' %}
+{% load static %}
+{% load club_tags %}
 {% block content %}
+
+    {% show_main_img '300' 'ПОИСК СУЩЕСТВУЮЩЕГО КЛУБА' %}
     <br><br>
     <div class="container">
-    {% for club in clubs %}
-        <h1>{{ club.title }}</h1>
-        <a href="{% url 'app_clubs:join_club' club_slug=club.slug %}">Перейти</a>
-        <hr>
-    {% endfor %}
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for club in clubs %}
+
+                <div class="col">
+                    <div class="card h-100">
+                        <img style="height: 200px; overflow: hidden !important;" src="{% static 'app_clubs/images/no_photo.avif' %}" class="card-img-top">
+                        <div class="card-body">
+                            <h2 class="card-title text-center">{{ club.title }}</h2>
+                            <p class="card-text" style="font-size: 24px">{{ club.description }}</p>
+                            <p class="text-center">
+                                <a href="{% url 'app_clubs:join_club' club.slug %}" class="btn btn-secondary">Вступить</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
     </div>
+
+    <br><br><br><br><br>
 {% endblock %}

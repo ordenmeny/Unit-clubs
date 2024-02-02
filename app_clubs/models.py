@@ -3,9 +3,9 @@ from django.db import models
 
 
 class Club(models.Model):
-    title = models.CharField(max_length=64)
+    title = models.CharField(max_length=64, verbose_name='Заголовок')
     slug = models.SlugField(max_length=128, db_index=True, null=False, blank=True, unique=True)
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True, verbose_name='Информация о клубе')
     members = models.ManyToManyField(get_user_model(), related_name='club_members', blank=True)
 
     def __str__(self):
@@ -28,8 +28,8 @@ class EventModel(models.Model):
     ]
     title = models.CharField(max_length=64, verbose_name='Заголовок')
     slug = models.SlugField(max_length=128, db_index=True, null=False, blank=True, unique=True)
-    description = models.TextField(blank=True, null=True)
-    format = models.CharField(max_length=16, choices=format_choices)
+    description = models.TextField(blank=True, null=True, verbose_name="Описание события")
+    format = models.CharField(max_length=16, choices=format_choices, verbose_name="Формат проведения")
 
 
     def __str__(self):

@@ -1,13 +1,8 @@
-{
-%
-load
-static
-%
-}
+{% load static %}
 
 .container-photo {
     width: 100% !important;
-    height: 596px !important;
+    /*height: 596px !important;*/
     background-position: center !important;
     background-size: cover !important;
     background-attachment: fixed !important;

@@ -9,4 +9,4 @@ navbar = [
 
 
 def context_navbar(request):
-    return {'logo': 'Клубы', 'menu_navbar': navbar}
+    return {'logo': 'Клубы', 'main_page_url': reverse_lazy('app_clubs:home_page'), 'menu_navbar': navbar}
