@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.utils.text import slugify
-from django.views.generic import CreateView, UpdateView, ListView
+from django.views.generic import CreateView, UpdateView, ListView, TemplateView
 from .models import *
 from .forms import *
 from django.urls import reverse_lazy
@@ -67,7 +67,6 @@ class CreatePost(DataMixin, CreateView):
         return super().form_valid(form)
 
 
-
 class CreateEvent(DataMixin, CreateView):
     model = EventModel
     form_class = FormEvent
@@ -80,3 +79,7 @@ class CreateEvent(DataMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('app_clubs:create_event')
+
+
+class HomePage(TemplateView):
+    template_name = 'app_clubs/index.html'

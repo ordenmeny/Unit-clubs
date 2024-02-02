@@ -1,6 +1,9 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link type="text/css" href="{% static 'app_clubs/styles/main.css' %}" rel="stylesheet" />
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,6 +20,16 @@
 <style>
     .asteriskField {
         display: none;
+    }
+    @font-face {
+            font-family: 'NT_Sakharov';
+            src: url('{% static 'app_clubs/fonts/NT Sakharov Result-VF.ttf' %}') format('truetype');
+            /* Другие стили шрифта могут быть добавлены здесь */
+    }
+
+    body {
+        font-family: 'NT_Sakharov', sans-serif;
+        /* Замените 'sans-serif' на другой шрифт, который будет использоваться, если ваш шрифт недоступен */
     }
 </style>
 {% block content %}

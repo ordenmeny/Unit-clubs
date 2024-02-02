@@ -1,0 +1,64 @@
+{
+%
+load
+static
+%
+}
+
+.container-photo {
+    width: 100% !important;
+    height: 596px !important;
+    background-position: center !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    /*justify-content: center;*/
+    /*justify-content: flex-start;*/
+}
+
+.container-photo-text {
+    width: 50%;
+    /*margin-left: 60px;*/
+    font-size: 90px;
+}
+
+.text-section-2 {
+    font-weight: 300;
+    font-size: 60px;
+    line-height: 1;
+    text-decoration: none;
+    color: #101820;
+}
+
+.title-section {
+    color: #989898;
+    font-size: 60px;
+    font-weight: 300;
+}
+
+.naprav-block {
+    border: 1px solid #101820;
+    justify-content: center;
+    /*align-items: center;*/
+    display: flex;
+    color: #101820;
+    font-size: 40px;
+    font-weight: 200;
+    padding-top: 25px;
+    padding-bottom: 10px;
+}
+
+.flipped-text {
+    transform: rotate(90deg);
+
+    /*transform-origin: 0.5 0.5; !* Устанавливаем точку поворота в верхний левый угол *!*/
+    white-space: nowrap; /* Предотвращаем перенос слова на новую строку */
+    line-height: 1; /* Устанавливаем высоту строки на 1, чтобы избежать дополнительного вертикального отступа */
+    /*display: inline-block; !* Позволяет выровнять по вертикали *!*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
