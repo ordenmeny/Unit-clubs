@@ -19,3 +19,18 @@ class ModelPost(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class EventModel(models.Model):
+    format_choices = [
+        ("Онлайн", "Онлайн"),
+        ("Офлайн", "Офлайн"),
+    ]
+    title = models.CharField(max_length=64, verbose_name='Заголовок')
+    slug = models.SlugField(max_length=128, db_index=True, null=False, blank=True, unique=True)
+    description = models.TextField(blank=True, null=True)
+    format = models.CharField(max_length=16, choices=format_choices)
+
+
+    def __str__(self):
+        return self.title

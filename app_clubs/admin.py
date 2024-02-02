@@ -10,3 +10,5 @@ class ClubAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Club, ClubAdmin)
+admin.site.register(ModelPost)
+admin.site.register(EventModel, ClubAdmin)

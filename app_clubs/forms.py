@@ -19,3 +19,9 @@ class FormPost(ModelForm):
     class Meta:
         model = ModelPost
         fields = ['title', 'text']
+
+
+class FormEvent(ModelForm):
+    class Meta:
+        model = EventModel
+        fields = ['title', 'description', 'format']
