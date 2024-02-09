@@ -57,13 +57,13 @@ class CreatePost(DataMixin, CreateView):
     model = ModelPost
     form_class = FormPost
     template_name = 'app_clubs/create_post.html'
-    item_selected = 'create_post'
 
     def get_success_url(self):
-        return reverse_lazy('app_clubs:create_post')
+        return reverse_lazy('app_clubs:home_page')
 
     def form_valid(self, form):
-        form.instance.title = slugify(form.instance.title)
+        form.instance.slug = slugify(form.instance.title)
+        form.instance.club = Club.objects.get(slug=self.kwargs['club_slug'])
         return super().form_valid(form)
 
 

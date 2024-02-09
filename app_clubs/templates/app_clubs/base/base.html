@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link type="text/css" href="{% static 'app_clubs/styles/main.css' %}" rel="stylesheet" />
-
+    <link type="text/css" href="{% static 'app_clubs/styles/main.css' %}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ title }}</title>
@@ -21,9 +21,10 @@
     .asteriskField {
         display: none;
     }
+
     @font-face {
-            font-family: 'NT_Sakharov';
-            src: url('{% static 'app_clubs/fonts/NT Sakharov Result-VF.ttf' %}') format('truetype');
+        font-family: 'NT_Sakharov';
+        src: url('{% static 'app_clubs/fonts/NT Sakharov Result-VF.ttf' %}') format('truetype');
     }
 
     body {
@@ -32,5 +33,8 @@
 </style>
 {% block content %}
 {% endblock %}
+
+
+{#{% include 'app_clubs/base/footer.html' %}#}
 </body>
 </html>

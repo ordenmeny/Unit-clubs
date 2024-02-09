@@ -7,9 +7,10 @@ urlpatterns = [
     path('create-club/', views.CreateClub.as_view(), name='create_club'),
     path('join-club/<slug:club_slug>/', views.JoinClub.as_view(), name='join_club'),
     path('list-clubs/', views.ListClubs.as_view(), name='list_clubs'),
-    path('create-post/', views.CreatePost.as_view(), name='create_post'),
-    path('create-event/', views.CreateEvent.as_view(), name='create_event'),
+    path('create-post/<slug:club_slug>/', views.CreatePost.as_view(), name='create_post'),
+    path('create-event/<slug:club_slug>/', views.CreateEvent.as_view(), name='create_event'),
     path('', views.HomePage.as_view(), name='home_page')
+
 
 
     # club-dashboard:
