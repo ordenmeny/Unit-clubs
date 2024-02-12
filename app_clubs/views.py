@@ -6,9 +6,10 @@ from .forms import *
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
 from .utils import DataMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class CreateClub(DataMixin, CreateView):
+class CreateClub(LoginRequiredMixin, DataMixin, CreateView):
     model = Club
     form_class = ClubForm
     template_name = 'app_clubs/create_club.html'
@@ -22,7 +23,7 @@ class CreateClub(DataMixin, CreateView):
         return super().form_valid(form)
 
 
-class JoinClub(UpdateView):
+class JoinClub(LoginRequiredMixin, UpdateView):
     model = Club
     form_class = FormJoinClub
     slug_url_kwarg = 'club_slug'
@@ -46,14 +47,22 @@ class JoinClub(UpdateView):
         return super().form_valid(form)
 
 
-class ListClubs(DataMixin, ListView):
+class ListClubs(LoginRequiredMixin, DataMixin, ListView):
     context_object_name = 'clubs'
     model = Club
     template_name = 'app_clubs/list_clubs.html'
     item_selected = 'list_clubs'
 
 
-class CreatePost(DataMixin, CreateView):
+class RequiredClubMember(LoginRequiredMixin):
+    # делается проверка: если текущий пользователь есть в текущем клубе, то ...
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    # проверка: если текущий пользователь является админом к текущем клубе, то...
+
+
+class CreatePost(RequiredClubMember, DataMixin, CreateView):
     model = ModelPost
     form_class = FormPost
     template_name = 'app_clubs/create_post.html'
@@ -67,7 +76,7 @@ class CreatePost(DataMixin, CreateView):
         return super().form_valid(form)
 
 
-class CreateEvent(DataMixin, CreateView):
+class CreateEvent(LoginRequiredMixin, DataMixin, CreateView):
     model = EventModel
     form_class = FormEvent
     template_name = 'app_clubs/create_event.html'

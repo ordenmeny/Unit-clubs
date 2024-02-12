@@ -22,7 +22,7 @@ class BaseModel(models.Model):
 class Club(BaseModel):
     club = None
     description = models.TextField(blank=True, null=True, verbose_name='Информация о клубе')
-    members = models.ManyToManyField(get_user_model(), related_name='club_members', blank=True)
+
 
     class Meta:
         verbose_name_plural = 'Клубы'
