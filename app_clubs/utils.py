@@ -1,4 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+
+from app_clubs.models import Club
 
 
 class DataMixin:
@@ -15,9 +20,15 @@ class DataMixin:
 
 
 class RequiredClubMember(LoginRequiredMixin):
-    pass
-    # делается проверка: если текущий пользователь есть в текущем клубе, то ...
-    # def dispatch(self, request, *args, **kwargs):
-    #     return super().dispatch(request, *args, **kwargs)
+    def dispatch(self, request, *args, **kwargs):
+        # получаем объекты пользователя и клуба
+        current_user = request.user
+        current_club = Club.objects.get(slug=self.kwargs['club_slug'])
+
+        # делаем проверку, есть ли такой клуб у пользователя
+        if not (current_club in current_user.clubs.all()):
+            return redirect(reverse_lazy('app_clubs:home_page'))
+
+        return super().dispatch(request, *args, **kwargs)
 
     # проверка: если текущий пользователь является админом к текущем клубе, то...
