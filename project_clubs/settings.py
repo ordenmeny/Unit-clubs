@@ -36,9 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # My apps
-    'users',
     'app_clubs',
-
+    'users',
     # Bootstrap
     "crispy_forms",
     "crispy_bootstrap5",
@@ -126,8 +125,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # settings for users
 AUTH_USER_MODEL = 'users.User'
-
-
+LOGIN_URL = 'app_clubs:home_page'
+LOGOUT_REDIRECT_URL = 'app_clubs:home_page'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"

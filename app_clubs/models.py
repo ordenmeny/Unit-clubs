@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.conf import settings
 
 
 class BaseModel(models.Model):
@@ -21,8 +22,9 @@ class BaseModel(models.Model):
 
 class Club(BaseModel):
     club = None
-    description = models.TextField(blank=True, null=True, verbose_name='Информация о клубе')
+    admins = models.ManyToManyField(get_user_model())
 
+    description = models.TextField(blank=True, null=True, verbose_name='Информация о клубе')
 
     class Meta:
         verbose_name_plural = 'Клубы'

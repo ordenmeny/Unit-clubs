@@ -5,7 +5,7 @@ from .models import *
 from .forms import *
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
-from .utils import DataMixin
+from .utils import DataMixin, RequiredClubMember
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -54,14 +54,6 @@ class ListClubs(LoginRequiredMixin, DataMixin, ListView):
     item_selected = 'list_clubs'
 
 
-class RequiredClubMember(LoginRequiredMixin):
-    # делается проверка: если текущий пользователь есть в текущем клубе, то ...
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-
-    # проверка: если текущий пользователь является админом к текущем клубе, то...
-
-
 class CreatePost(RequiredClubMember, DataMixin, CreateView):
     model = ModelPost
     form_class = FormPost
@@ -76,7 +68,7 @@ class CreatePost(RequiredClubMember, DataMixin, CreateView):
         return super().form_valid(form)
 
 
-class CreateEvent(LoginRequiredMixin, DataMixin, CreateView):
+class CreateEvent(RequiredClubMember, DataMixin, CreateView):
     model = EventModel
     form_class = FormEvent
     template_name = 'app_clubs/create_event.html'
