@@ -22,9 +22,11 @@ class BaseModel(models.Model):
 
 class Club(BaseModel):
     club = None
-    admins = models.ManyToManyField(get_user_model())
+    admins = models.ManyToManyField(get_user_model(), related_name='clubsadmins')
+    not_approved = models.ManyToManyField(get_user_model(), related_name='notapproved')
 
     description = models.TextField(blank=True, null=True, verbose_name='Информация о клубе')
+    moderate = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = 'Клубы'

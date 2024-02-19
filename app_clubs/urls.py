@@ -10,6 +10,7 @@ urlpatterns = [
     path('list-clubs/', views.ListClubs.as_view(), name='list_clubs'),
     path('create-post/<slug:club_slug>/', views.CreatePost.as_view(), name='create_post'),
     path('create-event/<slug:club_slug>/', views.CreateEvent.as_view(), name='create_event'),
+    path('approve-members/<slug:club_slug>', views.ApproveMembers.as_view(), name='approve_members'),
     # path('dash<slug:club_slug>', views.)
 ]
 

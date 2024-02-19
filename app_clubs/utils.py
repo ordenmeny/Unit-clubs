@@ -20,14 +20,20 @@ class DataMixin:
 
 
 class RequiredClubMember(LoginRequiredMixin):
+    for_admin = False
+
     def dispatch(self, request, *args, **kwargs):
         # получаем объекты пользователя и клуба
         current_user = request.user
         current_club = Club.objects.get(slug=self.kwargs['club_slug'])
-
-        # делаем проверку, есть ли такой клуб у пользователя
+        # делаем проверку, есть ли такой клуб у пользователя. Если нет-редирект!
         if not (current_club in current_user.clubs.all()):
             return redirect(reverse_lazy('app_clubs:home_page'))
+
+        # Является ли страница только для админов? Если да-пошел вон(если ты не админ)!
+        if self.for_admin:
+            if request.user not in current_club.admins.all():
+                return redirect(reverse_lazy('app_clubs:home_page'))
 
         return super().dispatch(request, *args, **kwargs)
 

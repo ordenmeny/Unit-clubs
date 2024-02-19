@@ -33,18 +33,28 @@ class JoinClub(LoginRequiredMixin, UpdateView):
         return reverse_lazy('app_clubs:join_club', kwargs={'club_slug': self.kwargs['club_slug']})
 
     def form_valid(self, form):
-        # Во время валидации формы(без полей):
+        # Нужно делать проверку:
+        # если клуб moderate == True, то добавляем сначала в поле not_approved.
+        # Админ заходит со страницы заявок. Нажимая на кнопки, подтверждает заявки.
 
-        # получаем объект клуба по слагу из url
-        club = Club.objects.get(slug=self.kwargs['club_slug'])
+        # Весь путь: объект пользователя добавляется в not_approved.
+        # На ApproveMembers выводятся все члены этой группы.
+        #
 
-        # получаем объект user
-        user = get_user_model().objects.get(username=self.request.user)
 
-        # Добавляем в объекте клуба в поле members объект пользователя
-        club.members.add(user)
+
+        # Добавление в поле модели User объекта текущего клуба
+
+        current_club = Club.objects.get(slug=self.kwargs['club_slug'])
+        current_user = self.request.user
+
+        current_user.clubs.add(current_club)
 
         return super().form_valid(form)
+
+    def post(self, request, *args, **kwargs):
+        # ---
+        pass
 
 
 class ListClubs(LoginRequiredMixin, DataMixin, ListView):
@@ -58,6 +68,7 @@ class CreatePost(RequiredClubMember, DataMixin, CreateView):
     model = ModelPost
     form_class = FormPost
     template_name = 'app_clubs/create_post.html'
+    for_admin = True
 
     def get_success_url(self):
         return reverse_lazy('app_clubs:home_page')
@@ -66,6 +77,34 @@ class CreatePost(RequiredClubMember, DataMixin, CreateView):
         form.instance.slug = slugify(form.instance.title)
         form.instance.club = Club.objects.get(slug=self.kwargs['club_slug'])
         return super().form_valid(form)
+
+
+
+class ApproveMembers(ListView):
+    context_object_name = 'not_approved_members'
+    template_name = 'app_clubs/not_approve_members.html'
+
+    def get_current_club(self):
+        if hasattr(self, 'current_club'):
+            return self.current_club
+        else:
+            current_club = Club.objects.get(slug=self.kwargs['club_slug'])
+
+    def get_queryset(self):
+        current_club = self.get_current_club()
+        not_approved_members = current_club.not_approved.all()
+
+        return not_approved_members
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_club'] = self.get_current_club()
+        return context
+
+
+
+
+
 
 
 class CreateEvent(RequiredClubMember, DataMixin, CreateView):
