@@ -5,10 +5,10 @@
     {% for member in not_approved_members %}
 
         <h1>{{ member }}</h1>
-        <form method="post" action="{% url 'join_club' club_slug=current_club %}">
+        <form method="post">
             {% csrf_token %}
-            <input type="hidden" name="status" value="1">
-            <button type="submit">Запросить вступление в клуб</button>
+            <input type="hidden" name="user_id" value="{{ member.id }}">
+            <button type="submit">Подтвердить</button>
         </form>
 
     {% endfor %}

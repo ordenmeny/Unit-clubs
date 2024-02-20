@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.utils.text import slugify
-from django.views.generic import CreateView, UpdateView, ListView, TemplateView
+from django.views import View
+from django.views.generic import CreateView, UpdateView, ListView, TemplateView, FormView
 from .models import *
 from .forms import *
 from django.urls import reverse_lazy
@@ -21,40 +22,6 @@ class CreateClub(LoginRequiredMixin, DataMixin, CreateView):
     def form_valid(self, form):
         form.instance.slug = slugify(form.instance.title)
         return super().form_valid(form)
-
-
-class JoinClub(LoginRequiredMixin, UpdateView):
-    model = Club
-    form_class = FormJoinClub
-    slug_url_kwarg = 'club_slug'
-    template_name = 'app_clubs/join_club.html'
-
-    def get_success_url(self):
-        return reverse_lazy('app_clubs:join_club', kwargs={'club_slug': self.kwargs['club_slug']})
-
-    def form_valid(self, form):
-        # Нужно делать проверку:
-        # если клуб moderate == True, то добавляем сначала в поле not_approved.
-        # Админ заходит со страницы заявок. Нажимая на кнопки, подтверждает заявки.
-
-        # Весь путь: объект пользователя добавляется в not_approved.
-        # На ApproveMembers выводятся все члены этой группы.
-        #
-
-
-
-        # Добавление в поле модели User объекта текущего клуба
-
-        current_club = Club.objects.get(slug=self.kwargs['club_slug'])
-        current_user = self.request.user
-
-        current_user.clubs.add(current_club)
-
-        return super().form_valid(form)
-
-    def post(self, request, *args, **kwargs):
-        # ---
-        pass
 
 
 class ListClubs(LoginRequiredMixin, DataMixin, ListView):
@@ -79,31 +46,84 @@ class CreatePost(RequiredClubMember, DataMixin, CreateView):
         return super().form_valid(form)
 
 
+# class JoinClub(LoginRequiredMixin, View):
+#     template_name = 'app_clubs/join_post.html'
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['current_club'] = Club.objects.get(slug=self.kwargs.get('club_slug'))
+#         return context
+#
+#     # Пользователь выбирает клуб, переходит на подтверждающую страницу, нажимает кнопку.
+#     # Если клуб не медерируется-просто добавляем в клуб(*)
+#     # Если клуб модерируется:
+#     # 1) добавялется в not_approved.
+#     # 2) На странице админа выводится список из not_approved
+#     # 3) Админ нажмимает на кнопку, пользователь добавляется в клуб(* то же действие)
+#     #
+#
+#     def post(self, request, *args, **kwargs):
+#         to_moderate = self.kwargs.get('club_slug')
+#         # status = request.POST.get('status')  # параметр из формы
+#
+#         current_club = Club.objects.get(slug=self.kwargs.get('club_slug'))
+#         current_user = request.user
+#
+#         if to_moderate == False:
+#             # если не нужно модерировать-просто добавляем в БД
+#             current_user.clubs.add(current_club)
+#         # Если нужно модерировать:
+#         if to_moderate:
+#             current_club.not_approved.add(current_user)
 
-class ApproveMembers(ListView):
-    context_object_name = 'not_approved_members'
-    template_name = 'app_clubs/not_approve_members.html'
+class JoinClub(LoginRequiredMixin, FormView):
+    template_name = 'app_clubs/join_club.html'
+    form_class = FormJoinClub
+    success_url = reverse_lazy('app_clubs:home_page')
 
-    def get_current_club(self):
-        if hasattr(self, 'current_club'):
-            return self.current_club
+    def form_valid(self, form):
+        current_user = self.request.user
+        current_club = Club.objects.get(slug=self.kwargs['club_slug'])
+
+        if not current_club.moderate:
+            # Если не нужно модерировать
+            current_user.clubs.add(current_club)
+            return super().form_valid(form)
         else:
-            current_club = Club.objects.get(slug=self.kwargs['club_slug'])
+            # Если нужно модерировать
+            current_club.not_approved.add(current_user)
+            return super().form_valid(form)
+
+
+class ApproveMembers(RequiredClubMember, FormView, ListView):
+    form_class = FormJoinClub
+    template_name = 'app_clubs/not_approve_members.html'
+    context_object_name = 'not_approved_members'
+    success_url = reverse_lazy('app_clubs:home_page')
+    for_admin = True
+
+    def form_valid(self, form):
+        user_id = self.request.POST['user_id']
+        user_to_approve = get_user_model().objects.get(pk=user_id)
+
+        current_club = Club.objects.get(slug=self.kwargs["club_slug"])
+
+        current_club.not_approved.remove(user_to_approve)
+        user_to_approve.clubs.add(current_club)
+
+        return super().form_valid(form)
+
 
     def get_queryset(self):
-        current_club = self.get_current_club()
+        current_club = Club.objects.get(slug=self.kwargs['club_slug'])
         not_approved_members = current_club.not_approved.all()
-
         return not_approved_members
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_club'] = self.get_current_club()
+        current_club = Club.objects.get(slug=self.kwargs['club_slug'])
+        context['current_club'] = current_club.slug
         return context
-
-
-
-
 
 
 
