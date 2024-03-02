@@ -6,12 +6,15 @@ app_name = "app_clubs"
 urlpatterns = [
     path('', views.HomePage.as_view(), name='home_page'),
     path('create-club/', views.CreateClub.as_view(), name='create_club'),
-    path('join-club/<slug:club_slug>/', views.JoinClub.as_view(), name='join_club'),
+    path('<slug:club_slug>/join-club/', views.JoinClub.as_view(), name='join_club'),
     path('list-clubs/', views.ListClubs.as_view(), name='list_clubs'),
-    path('create-post/<slug:club_slug>/', views.CreatePost.as_view(), name='create_post'),
-    path('create-event/<slug:club_slug>/', views.CreateEvent.as_view(), name='create_event'),
-    path('approve-members/<slug:club_slug>', views.ApproveMembers.as_view(), name='approve_members'),
-    # path('dash<slug:club_slug>', views.)
+
+    # URLs for clubs
+    # path('<slug:club_slug>/club-profile/')
+    path('<slug:club_slug>/create-post/', views.CreatePost.as_view(), name='create_post'),
+    path('<slug:club_slug>/create-event/', views.CreateEvent.as_view(), name='create_event'),
+    path('<slug:club_slug>/approve-members/', views.ApproveMembers.as_view(), name='approve_members'),
+
 ]
 
 # club-dashboard:

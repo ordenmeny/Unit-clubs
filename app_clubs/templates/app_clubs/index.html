@@ -3,7 +3,7 @@
 {% load club_tags %}
 {% block content %}
 
-{% show_main_img '596' %}
+    {% show_main_img '596' %}
     <div class="container-fluid" style="border-bottom: 1px solid #101820">
         <div class="row">
             <div class="col-lg-6" style="border-right: 1px solid #101820;">
@@ -78,6 +78,21 @@
             </div>
         </div>
     </div>
+    <br><br>
+
+    {% if user.is_authenticated %}
+        <div class="container">
+            <h2>Мои клубы</h2>
+            {% for club in clubs %}
+                <p>{{ club }}</p>
+                <a href="{% url 'app_clubs:create_post' club_slug=club.slug %}">Добавить пост</a>
+                <a href="{% url 'app_clubs:create_event' club_slug=club.slug %}">Добавить ивент</a>
+
+            {% endfor %}
+
+
+        </div>
+    {% endif %}
     <br><br><br><br><br><br><br><br><br><br>
 
 {% endblock %}

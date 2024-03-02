@@ -131,7 +131,6 @@ class CreateEvent(RequiredClubMember, DataMixin, CreateView):
     model = EventModel
     form_class = FormEvent
     template_name = 'app_clubs/create_event.html'
-    item_selected = 'create_event'
 
     def form_valid(self, form):
         form.instance.slug = slugify(form.instance.title)
@@ -141,5 +140,12 @@ class CreateEvent(RequiredClubMember, DataMixin, CreateView):
         return reverse_lazy('app_clubs:create_event')
 
 
-class HomePage(TemplateView):
+class HomePage(ListView):
+    context_object_name = 'clubs'
     template_name = 'app_clubs/index.html'
+
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            my_clubs = self.request.user.clubs.all()
+            return my_clubs
