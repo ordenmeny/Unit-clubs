@@ -11,13 +11,20 @@
 
                 <div class="col">
                     <div class="card h-100">
-                        <img style="height: 200px; overflow: hidden !important;" src="{% static 'app_clubs/images/no_photo.avif' %}" class="card-img-top">
+                        {% if club.image %}
+                            <div style="overflow: hidden; height: 200px;">
+                                <img style="object-fit: cover; height: 100%; width: 100%;"
+                                     src="{{ club.image.url }}" class="card-img-top">
+
+                            </div>
+
+                        {% endif %}
                         <div class="card-body">
-                            <h2 class="card-title text-center">{{ club.title }}</h2>
-                            <p class="card-text" style="font-size: 24px">{{ club.description }}</p>
-                            <p class="text-center">
-                                <a href="{% url 'app_clubs:join_club' club.slug %}" class="btn btn-secondary">Вступить</a>
-                            </p>
+                            <p class="card-title" style="font-size: 30px; font-weight: 600">{{ club.title }}</p>
+{#                            <p class="card-text" style="font-size: 18px">{{ club.description|truncatechars:100 }}</p>#}
+{#                            <p style="color: rgba(0,0,0,0.57)"># Технологии # IT</p>#}
+                            <a href="{% url 'app_clubs:join_club' club.slug %}"
+                               class="btn join-btn">Подробнее <i class="bi bi-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>

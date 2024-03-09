@@ -79,3 +79,10 @@
     font-size: 30px;
 }
 
+.join-btn{
+    border: 1px solid black;
+    background-color: black !important;
+    color: white !important;
+    font-size: 54px;
+    border-radius: 0px !important;
+}

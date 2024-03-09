@@ -10,7 +10,7 @@ class UserForm(UserCreationForm):
 
     class Meta:
         model = get_user_model()
-        fields = ['username', 'password1', 'password2', 'fio', 'image']
+        fields = ['username', 'fio', 'tg', 'password1', 'password2',  'image']
 
 
 class LoginForm(AuthenticationForm):

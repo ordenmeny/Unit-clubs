@@ -30,7 +30,6 @@ class Club(BaseModel):
     moderate = models.BooleanField(default=False, verbose_name='Модерировать')
 
     image = models.FileField(upload_to='uploads/%Y/%m/%d/', default=None, null=True, blank=True, verbose_name='Изображение')
-    # tg = ...
 
 
     class Meta:
