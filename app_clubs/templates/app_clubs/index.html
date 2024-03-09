@@ -87,7 +87,7 @@
                 <p>{{ club }}</p>
                 <a href="{% url 'app_clubs:create_post' club_slug=club.slug %}">Добавить пост</a>
                 <a href="{% url 'app_clubs:create_event' club_slug=club.slug %}">Добавить ивент</a>
-
+                <a href="{% url 'app_clubs:profile_club' club_slug=club.slug %}">Профиль клуба</a>
             {% endfor %}
 
 

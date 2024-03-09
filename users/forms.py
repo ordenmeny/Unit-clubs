@@ -6,7 +6,7 @@ from django import forms
 
 class UserForm(UserCreationForm):
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput())
-    password2 = forms.CharField(label='Пароль', widget=forms.PasswordInput())
+    password2 = forms.CharField(label='Повторите пароль', widget=forms.PasswordInput())
 
     class Meta:
         model = get_user_model()

@@ -23,10 +23,12 @@ class BaseModel(models.Model):
 class Club(BaseModel):
     club = None
     admins = models.ManyToManyField(get_user_model(), related_name='clubsadmins')
-    not_approved = models.ManyToManyField(get_user_model(), related_name='notapproved')
+    not_approved = models.ManyToManyField(get_user_model(), related_name='notapproved', null=True, blank=True)
 
     description = models.TextField(blank=True, null=True, verbose_name='Информация о клубе')
-    moderate = models.BooleanField(default=False)
+    moderate = models.BooleanField(default=False, verbose_name='Модерировать')
+
+    image = models.FileField(upload_to='uploads/%Y/%m/%d/', default=None, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'Клубы'
@@ -34,6 +36,7 @@ class Club(BaseModel):
 
 class ModelPost(BaseModel):
     text = models.TextField(blank=True, null=True, verbose_name='Текст')
+    image = models.FileField(upload_to='uploads/posts/', default=None, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'Посты'

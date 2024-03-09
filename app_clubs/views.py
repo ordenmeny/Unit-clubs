@@ -8,6 +8,29 @@ from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
 from .utils import DataMixin, RequiredClubMember
 from django.contrib.auth.mixins import LoginRequiredMixin
+from pytils.translit import slugify
+
+
+class ProfileUser(LoginRequiredMixin, TemplateView):
+    template_name = 'app_clubs/profile_user.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_clubs'] = self.request.user.clubs.all()
+
+        return context
+
+
+class ProfileClub(RequiredClubMember, TemplateView):
+    template_name = 'app_clubs/profile_club.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_club'] = self.request.current_club
+        context['events'] = EventModel.objects.filter(club=self.request.current_club)
+        context['posts'] = ModelPost.objects.filter(club=self.request.current_club)
+        context['members'] = get_user_model().objects.filter(clubs=self.request.current_club)
+        return context
 
 
 class CreateClub(LoginRequiredMixin, DataMixin, CreateView):
@@ -21,6 +44,7 @@ class CreateClub(LoginRequiredMixin, DataMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.slug = slugify(form.instance.title)
+        # !!! Добавить добавления в админы
         return super().form_valid(form)
 
 
@@ -45,36 +69,6 @@ class CreatePost(RequiredClubMember, DataMixin, CreateView):
         form.instance.club = Club.objects.get(slug=self.kwargs['club_slug'])
         return super().form_valid(form)
 
-
-# class JoinClub(LoginRequiredMixin, View):
-#     template_name = 'app_clubs/join_post.html'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['current_club'] = Club.objects.get(slug=self.kwargs.get('club_slug'))
-#         return context
-#
-#     # Пользователь выбирает клуб, переходит на подтверждающую страницу, нажимает кнопку.
-#     # Если клуб не медерируется-просто добавляем в клуб(*)
-#     # Если клуб модерируется:
-#     # 1) добавялется в not_approved.
-#     # 2) На странице админа выводится список из not_approved
-#     # 3) Админ нажмимает на кнопку, пользователь добавляется в клуб(* то же действие)
-#     #
-#
-#     def post(self, request, *args, **kwargs):
-#         to_moderate = self.kwargs.get('club_slug')
-#         # status = request.POST.get('status')  # параметр из формы
-#
-#         current_club = Club.objects.get(slug=self.kwargs.get('club_slug'))
-#         current_user = request.user
-#
-#         if to_moderate == False:
-#             # если не нужно модерировать-просто добавляем в БД
-#             current_user.clubs.add(current_club)
-#         # Если нужно модерировать:
-#         if to_moderate:
-#             current_club.not_approved.add(current_user)
 
 class JoinClub(LoginRequiredMixin, FormView):
     template_name = 'app_clubs/join_club.html'
@@ -113,7 +107,6 @@ class ApproveMembers(RequiredClubMember, FormView, ListView):
 
         return super().form_valid(form)
 
-
     def get_queryset(self):
         current_club = Club.objects.get(slug=self.kwargs['club_slug'])
         not_approved_members = current_club.not_approved.all()
@@ -124,7 +117,6 @@ class ApproveMembers(RequiredClubMember, FormView, ListView):
         current_club = Club.objects.get(slug=self.kwargs['club_slug'])
         context['current_club'] = current_club.slug
         return context
-
 
 
 class CreateEvent(RequiredClubMember, DataMixin, CreateView):
@@ -143,7 +135,6 @@ class CreateEvent(RequiredClubMember, DataMixin, CreateView):
 class HomePage(ListView):
     context_object_name = 'clubs'
     template_name = 'app_clubs/index.html'
-
 
     def get_queryset(self):
         if self.request.user.is_authenticated:

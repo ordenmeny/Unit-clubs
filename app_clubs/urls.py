@@ -10,11 +10,12 @@ urlpatterns = [
     path('list-clubs/', views.ListClubs.as_view(), name='list_clubs'),
 
     # URLs for clubs
-    # path('<slug:club_slug>/club-profile/')
     path('<slug:club_slug>/create-post/', views.CreatePost.as_view(), name='create_post'),
     path('<slug:club_slug>/create-event/', views.CreateEvent.as_view(), name='create_event'),
     path('<slug:club_slug>/approve-members/', views.ApproveMembers.as_view(), name='approve_members'),
+    path('<slug:club_slug>/profile-club/', views.ProfileClub.as_view(), name='profile_club'),
 
+    path('profile-user/', views.ProfileUser.as_view(), name='profile_user'),
 ]
 
 # club-dashboard:
