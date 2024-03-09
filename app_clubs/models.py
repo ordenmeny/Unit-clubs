@@ -9,7 +9,7 @@ class BaseModel(models.Model):
         ("Офлайн", "Офлайн"),
     ]
 
-    title = models.CharField(max_length=64, verbose_name='Заголовок')
+    title = models.CharField(max_length=128, verbose_name='Заголовок')
     slug = models.SlugField(max_length=128, db_index=True, null=False, blank=True, unique=True)
     club = models.ForeignKey("Club", on_delete=models.SET_NULL, null=True, blank=True)
 
@@ -37,6 +37,7 @@ class Club(BaseModel):
 class ModelPost(BaseModel):
     text = models.TextField(blank=True, null=True, verbose_name='Текст')
     image = models.FileField(upload_to='uploads/posts/', default=None, null=True, blank=True)
+
 
     class Meta:
         verbose_name_plural = 'Посты'
