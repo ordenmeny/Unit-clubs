@@ -4,7 +4,7 @@
 
 {% block content %}
 
-    <style>
+<style>
         .img-post-list {
             height: 300px;
             background-size: cover;
@@ -17,84 +17,115 @@
             border: 1px solid white;
         }
 
-    </style>
-    {#    {% show_main_img height='300' title='Профиль клуба' opacity='0.9' src='app_clubs/images/main_page.png' %}#}
+
+
+
+
+</style>
+
+<div class="container">
+    <h1 class="" style="font-size: 64px; font-weight: bold">{{ current_club }}</h1>
+    <!--    <img src="{{ current_club.image.url }}" style="width: 30%">-->
+</div><br><br><br>
+
+<div class="container">
+    <h2 class="title-weight-section">События</h2><br>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for event in events %}
+
+        <div class="col">
+            <div class="card h-100" style="background-color: #e8e8e8;">
+
+                <div class="card-body">
+                    <a href="#" class="card-title text-decoration-none" style="color: black; font-weight: 700">
+                        {{ event.title }}</a><br><br>
+                    <a class="card-text text-decoration-none" href="#" style="color: black; font-weight: 500">
+                        {{ event.description|truncatechars:200|safe }}</a>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
     <br>
-    <h1 class="container" style="font-size: 64px; font-weight: bold">{{ current_club }}</h1><br><br>
+    <p>Еще...</p>
 
-    <div class="container">
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            {% for post in posts %}
+</div>
 
-                <div class="col">
-                    <div class="card h-100" style="border: none">
 
-                        {% if post.image %}
-                            <div class="img-post-list" style="background-image: url({{ post.image.url }});">
-                        {% else %}
-                            <div class="img-post-list" style="background-image: url({% static 'users/images/back_page_login.png' %});">
+<br><br><br>
+
+
+<div class="container">
+    <h2 class="title-weight-section">Статьи и новости</h2><br>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for post in posts %}
+
+        <div class="col">
+            <div class="card h-100" style="border: none">
+
+                {% if post.image %}
+                <div class="img-post-list" style="background-image: url({{ post.image.url }});">
+                    {% else %}
+                    <div class="img-post-list"
+                         style="background-image: url({% static 'users/images/back_page_login.png' %});">
                         {% endif %}
 
-                            <div class="card-img-overlay block-post-list">
-                                <div>
-                                    <p class="card-text" style="color:white">Новости<i class="bi bi-dot"></i><small>9
-                                        марта,
-                                        2024</small></p>
-                                    <h5 class="card-title" style="color: white; font-weight: 600">{{ post.title }}</h5>
-                                </div>
-
-
+                        <div class="card-img-overlay block-post-list">
+                            <div>
+                                <p class="card-text" style="color:white">Новости<i class="bi bi-dot"></i><small>9
+                                    марта,
+                                    2024</small></p>
+                                <h5 class="card-title" style="color: white; font-weight: 600">{{ post.title }}</h5>
                             </div>
-                        </div>
 
+
+                        </div>
                     </div>
+
+
                 </div>
+            </div>
 
             {% endfor %}
+        </div>
+        <br>
+        <p>Еще...</p>
+
+    </div>
+    <br><br><br>
+
+    <div class="container">
+        <div class="row gy-5">
+
+            {% for member in members %}
+
+
+
+            <div class="col-12 col-md-6 col-lg-3">
+
+                    {% if member.image %}
+
+                    <div class="mb-4 img-post-list" style="background-image: url({{ member.image.url }}); border-radius: 25px;">
+
+
+                    {% else %}
+
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    <h4 class="mb-1"><a href="#!" class="text-reset">{{ member.fio }}</a></h4>
+                    <span class="fs-6">Co-Founder &amp; CEO</span>
+                </div>
+            </div>
+
+            {% endfor %}
+
         </div>
     </div>
 
 
+    <br><br><br><br><br>
 
-    {#    <img src="{{ current_club.image.url }}" style="width: 30%">#}
-
-
-
-    {#    <div class="container">#}
-    {#        <div class="row">#}
-    {#            <div class="col-sm-6">#}
-    {#                <p class="rightside-title">Уведомления клуба</p>#}
-    {#                <p class="rightside-text"><i class="bi bi-clock"></i> Встреча участников</p>#}
-    {#                <hr style="width: 75%">#}
-    {#                <p class="rightside-text"><i class="bi bi-clock"></i> Экскурсия в АиБ+ЭРИКОС уже завтра! Записывайся скорее!</p>#}
-    {#                <hr style="width: 75%">#}
-    {#                <p class="rightside-text"><i class="bi bi-clock"></i> Встреча участников</p>#}
-    {#                <hr style="width: 75%">#}
-    {#                <p>Еще...</p>#}
-    {#            </div>#}
-    {#            <div class="col-sm-6">#}
-    {#                <p class="rightside-title">Ближайшие события</p>#}
-    {#                {% for event in events %}#}
-    {#                    <p class="rightside-text"><i class="bi bi-clock"></i> {{ event }}</p>#}
-    {#                    <hr style="width: 80%">#}
-    {#                {% endfor %}#}
-    {#                <p>Еще...</p>#}
-    {#            </div>#}
-
-    {#            <div class="col-sm-4">#}
-    {#                <p class="rightside-title">Участники</p>#}
-    {#                {% for member in members %}#}
-    {##}
-    {#                    <p class="rightside-text"><i class="bi bi-person-circle"></i> {{ member }}</p>#}
-    {#                    <hr style="width: 70%">#}
-    {#                {% endfor %}#}
-    {#            <p>Еще...</p>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#    </div>#}
-
-
-
-
-
-{% endblock %}
+    {% endblock %}

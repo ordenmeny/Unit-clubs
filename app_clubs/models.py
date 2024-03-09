@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.conf import settings
+from ckeditor.fields import RichTextField
 
 
 class BaseModel(models.Model):
@@ -28,7 +29,9 @@ class Club(BaseModel):
     description = models.TextField(blank=True, null=True, verbose_name='Информация о клубе')
     moderate = models.BooleanField(default=False, verbose_name='Модерировать')
 
-    image = models.FileField(upload_to='uploads/%Y/%m/%d/', default=None, null=True, blank=True)
+    image = models.FileField(upload_to='uploads/%Y/%m/%d/', default=None, null=True, blank=True, verbose_name='Изображение')
+    # tg = ...
+
 
     class Meta:
         verbose_name_plural = 'Клубы'
@@ -36,7 +39,7 @@ class Club(BaseModel):
 
 class ModelPost(BaseModel):
     text = models.TextField(blank=True, null=True, verbose_name='Текст')
-    image = models.FileField(upload_to='uploads/posts/', default=None, null=True, blank=True)
+    image = models.FileField(upload_to='uploads/posts/', default=None, null=True, blank=True, verbose_name='Изображение')
 
 
     class Meta:
@@ -44,8 +47,13 @@ class ModelPost(BaseModel):
 
 
 class EventModel(BaseModel):
-    description = models.TextField(blank=True, null=True, verbose_name="Описание события")
+    # description = models.TextField(blank=True, null=True, verbose_name="Описание события")
+    description = RichTextField(blank=True, null=True, verbose_name="Описание события")
     format = models.CharField(max_length=16, choices=BaseModel.format_choices, verbose_name="Формат проведения")
 
     class Meta:
         verbose_name_plural = 'События'
+
+
+class Notifs(models.Model):
+    text = models.TextField(blank=True, null=True, verbose_name='Текст')

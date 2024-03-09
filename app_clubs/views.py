@@ -126,10 +126,12 @@ class CreateEvent(RequiredClubMember, DataMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.slug = slugify(form.instance.title)
+        current_club = Club.objects.get(slug=self.kwargs['club_slug'])
+        form.instance.club = current_club
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('app_clubs:create_event')
+        return reverse_lazy('app_clubs:create_event', kwargs={'club_slug':self.kwargs['club_slug']})
 
 
 class HomePage(ListView):

@@ -4,11 +4,15 @@
 
 
 {% block content %}
-    <form class="container" method="post">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit">Отправить</button>
+<form class="container" method="post">
+    {% csrf_token %}
+    {{ form.media }}
 
-    </form>
+    {{ form.as_p }}
+
+
+    <button type="submit">Отправить</button>
+
+</form>
 
 {% endblock %}

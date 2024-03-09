@@ -23,3 +23,9 @@ class FormEvent(ModelForm):
     class Meta:
         model = EventModel
         fields = ['title', 'description', 'format']
+
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.TextInput(attrs={'class': 'form-control'}),
+            'format': forms.Select(attrs={'class': 'form-select form-select-lg mb-3'}),
+        }
