@@ -29,70 +29,90 @@
 
     <p class="ms-5 title-section">Направления:</p>
 
+    {#    <div class="container-fluid">#}
+    {#        <div class="row ms-4 me-4">#}
+    {#            <div class="col-lg-3">#}
+    {#                <div class="naprav-block">#}
+    {#                    <p class="">СПОРТ</p>#}
+    {#                </div>#}
+    {#                <br>#}
+    {#                <div class="naprav-block">#}
+    {#                    <p class="">IT</p>#}
+    {#                </div>#}
+    {#                <br>#}
+    {#                <div class="naprav-block">#}
+    {#                    <p class="">КИБЕРСПОРТ</p>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#            <div class="col-lg-3">#}
+    {#                <div class="naprav-block">#}
+    {#                    <p class="">ЛИТЕРАТУРА</p>#}
+    {#                </div>#}
+    {#                <br>#}
+    {#                <div class="naprav-block">#}
+    {#                    <p class="">КУЛЬТУРА</p>#}
+    {#                </div>#}
+    {#                <br>#}
+    {#                <div class="naprav-block">#}
+    {#                    <p class="">ОБЩЕНИЕ</p>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#            <div class="col-lg-3">#}
+    {#                <div class="naprav-block">#}
+    {#                    <p class="">РИСОВАНИЕ</p>#}
+    {#                </div>#}
+    {#                <br>#}
+    {#                <div class="naprav-block">#}
+    {#                    <p class="">МУЗЫКА</p>#}
+    {#                </div>#}
+    {#                <br>#}
+    {#                <div class="naprav-block">#}
+    {#                    <p class="">РУКОДЕЛИЕ</p>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#            <div class="col-lg-3">#}
+    {#                <div class="naprav-block" style="height: 100%">#}
+    {#                    <p class="flipped-text">Другое</p>#}
+    {#                </div>#}
+    {#                <br>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
     <div class="container-fluid">
         <div class="row ms-4 me-4">
             <div class="col-lg-3">
-                <div class="naprav-block">
-                    <p class="">СПОРТ</p>
-                </div>
-                <br>
-                <div class="naprav-block">
-                    <p class="">IT</p>
-                </div>
-                <br>
-                <div class="naprav-block">
-                    <p class="">КИБЕРСПОРТ</p>
-                </div>
+                {% for cat in cats|slice:"0:3" %}
+                    <div class="naprav-block">
+                        <a href="{% url 'app_clubs:list_clubs' cat=cat.0 %}" class="">{{ cat.1 }}</a>
+                    </div><br>
+                {% endfor %}
             </div>
             <div class="col-lg-3">
-                <div class="naprav-block">
-                    <p class="">ЛИТЕРАТУРА</p>
-                </div>
-                <br>
-                <div class="naprav-block">
-                    <p class="">КУЛЬТУРА</p>
-                </div>
-                <br>
-                <div class="naprav-block">
-                    <p class="">ОБЩЕНИЕ</p>
-                </div>
+                {% for cat in cats|slice:"3:6" %}
+                    <div class="naprav-block">
+                        <a style="color: black" href="{% url 'app_clubs:list_clubs' cat=cat.0 %}" class="">{{ cat.1 }}</a>
+                    </div><br>
+                {% endfor %}
             </div>
             <div class="col-lg-3">
-                <div class="naprav-block">
-                    <p class="">РИСОВАНИЕ</p>
-                </div>
-                <br>
-                <div class="naprav-block">
-                    <p class="">МУЗЫКА</p>
-                </div>
-                <br>
-                <div class="naprav-block">
-                    <p class="">РУКОДЕЛИЕ</p>
-                </div>
+                {% for cat in cats|slice:"6:9" %}
+                    <div class="naprav-block">
+                        <a href="{% url 'app_clubs:list_clubs' cat=cat.0 %}" class="">{{ cat.1 }}</a>
+                    </div><br>
+                {% endfor %}
             </div>
             <div class="col-lg-3">
-                <div class="naprav-block" style="height: 100%">
-                    <p class="flipped-text">Другое</p>
-                </div>
+{#                {% for cat in cats|slice:"9:" %}#}
+                    <div class="naprav-block" style="height: 94%">
+                        <a href="{% url 'app_clubs:list_clubs' cat=cats.9.0 %}" class="flipped-text text-decoration-none">{{ cats.9.1 }}</a>
+                    </div><br>
+{#                {% endfor %}#}
                 <br>
             </div>
         </div>
     </div>
-    <br><br>
-
-    {% if user.is_authenticated %}
-        <div class="container">
-            <h2>Мои клубы</h2>
-            {% for club in clubs %}
-                <p>{{ club }}</p>
-                <a href="{% url 'app_clubs:create_post' club_slug=club.slug %}">Добавить пост</a>
-                <a href="{% url 'app_clubs:create_event' club_slug=club.slug %}">Добавить ивент</a>
-                <a href="{% url 'app_clubs:profile_club' club_slug=club.slug %}">Профиль клуба</a>
-            {% endfor %}
 
 
-        </div>
-    {% endif %}
-    <br><br><br><br><br><br><br><br><br><br>
+    <br><br><br>
 
 {% endblock %}

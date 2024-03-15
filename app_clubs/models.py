@@ -3,6 +3,19 @@ from django.db import models
 from django.conf import settings
 from ckeditor.fields import RichTextField
 
+cats = [
+    ("sport", "СПОРТ"),
+    ("it", "IT"),
+    ("cybersport", "КИБЕРСПОРТ"),
+    ("literature", "ЛИТЕРАТУРА"),
+    ("culture", "КУЛЬТУРА"),
+    ("chatting", "ОБЩЕНИЕ"),
+    ("painting", "РИСОВАНИЕ"),
+    ("music", "МУЗЫКА"),
+    ("handwork", "РУКОДЕЛИЕ"),
+    ("another", "ДРУГОЕ"),
+]
+
 
 class BaseModel(models.Model):
     format_choices = [
@@ -29,8 +42,10 @@ class Club(BaseModel):
     description = models.TextField(blank=True, null=True, verbose_name='Информация о клубе')
     moderate = models.BooleanField(default=False, verbose_name='Модерировать')
 
-    image = models.FileField(upload_to='uploads/%Y/%m/%d/', default=None, null=True, blank=True, verbose_name='Изображение')
-
+    image = models.FileField(upload_to='uploads/%Y/%m/%d/', default=None, null=True, blank=True,
+                             verbose_name='Изображение')
+    tg = models.CharField(max_length=256, null=True, blank=True, verbose_name='Телеграм')
+    cat = models.CharField(max_length=64, choices=cats, verbose_name='Направления', null=True)
 
     class Meta:
         verbose_name_plural = 'Клубы'
@@ -38,8 +53,8 @@ class Club(BaseModel):
 
 class ModelPost(BaseModel):
     text = models.TextField(blank=True, null=True, verbose_name='Текст')
-    image = models.FileField(upload_to='uploads/posts/', default=None, null=True, blank=True, verbose_name='Изображение')
-
+    image = models.FileField(upload_to='uploads/posts/', default=None, null=True, blank=True,
+                             verbose_name='Изображение')
 
     class Meta:
         verbose_name_plural = 'Посты'

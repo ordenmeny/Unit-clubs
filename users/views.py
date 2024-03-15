@@ -12,7 +12,7 @@ class LoginUser(LoginView):
     form_class = LoginForm
 
     def get_success_url(self):
-        return reverse_lazy('users:login')
+        return reverse_lazy('app_clubs:profile_user')
 
 
 class SignUp(CreateView):

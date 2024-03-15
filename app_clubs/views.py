@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils.text import slugify
 from django.views import View
 from django.views.generic import CreateView, UpdateView, ListView, TemplateView, FormView
@@ -11,8 +11,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from pytils.translit import slugify
 
 
-class ProfileUser(LoginRequiredMixin, TemplateView):
+class ProfileUser(LoginRequiredMixin, DataMixin, TemplateView):
     template_name = 'app_clubs/profile_user.html'
+    item_selected = 'profile_user'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -54,12 +55,18 @@ class ListClubs(LoginRequiredMixin, DataMixin, ListView):
     template_name = 'app_clubs/list_clubs.html'
     item_selected = 'list_clubs'
 
+    def get_queryset(self):
+        if self.kwargs['cat'] == 'all':
+            return Club.objects.all()
+        return Club.objects.filter(cat=self.kwargs['cat'])
+
 
 class CreatePost(RequiredClubMember, DataMixin, CreateView):
     model = ModelPost
     form_class = FormPost
     template_name = 'app_clubs/create_post.html'
     for_admin = True
+    item_selected = 'create_post'
 
     def get_success_url(self):
         return reverse_lazy('app_clubs:home_page')
@@ -123,6 +130,7 @@ class CreateEvent(RequiredClubMember, DataMixin, CreateView):
     model = EventModel
     form_class = FormEvent
     template_name = 'app_clubs/create_event.html'
+    for_admin = True
 
     def form_valid(self, form):
         form.instance.slug = slugify(form.instance.title)
@@ -131,14 +139,9 @@ class CreateEvent(RequiredClubMember, DataMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('app_clubs:create_event', kwargs={'club_slug':self.kwargs['club_slug']})
+        return reverse_lazy('app_clubs:create_event', kwargs={'club_slug': self.kwargs['club_slug']})
 
 
-class HomePage(ListView):
-    context_object_name = 'clubs'
+class HomePage(TemplateView):
     template_name = 'app_clubs/index.html'
-
-    def get_queryset(self):
-        if self.request.user.is_authenticated:
-            my_clubs = self.request.user.clubs.all()
-            return my_clubs
+    extra_context = {'cats': cats}

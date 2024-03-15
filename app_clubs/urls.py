@@ -7,7 +7,7 @@ urlpatterns = [
     path('', views.HomePage.as_view(), name='home_page'),
     path('create-club/', views.CreateClub.as_view(), name='create_club'),
     path('<slug:club_slug>/join-club/', views.JoinClub.as_view(), name='join_club'),
-    path('list-clubs/', views.ListClubs.as_view(), name='list_clubs'),
+    path('<slug:cat>/list-clubs/', views.ListClubs.as_view(), name='list_clubs'),
 
     # URLs for clubs
     path('<slug:club_slug>/create-post/', views.CreatePost.as_view(), name='create_post'),

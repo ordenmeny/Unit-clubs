@@ -23,8 +23,20 @@
     <div class="container">
         <h1 class="" style="font-size: 64px; font-weight: bold">{{ current_club }}</h1>
         <!--    <img src="{{ current_club.image.url }}" style="width: 30%">-->
-    </div><br><br><br>
+    </div>
 
+    {% if request.user in current_club.admins.all %}
+        <br>
+        <div class="container">
+        <a class="btn btn-outline-secondary" href="{% url 'app_clubs:create_post' club_slug=current_club.slug %}">Создать
+            пост</a>
+        <a class="btn btn-outline-secondary" href="{% url 'app_clubs:create_event' club_slug=current_club.slug %}">Создать
+            событие</a>
+        <a class="btn btn-outline-secondary" href="{% url 'app_clubs:approve_members' club_slug=current_club.slug %}">Подтвердить участников</a>
+        </div>
+    {% endif %}
+
+    <br><br><br>
     <div class="container">
         <h2 class="title-weight-section">События</h2><br>
         <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -117,7 +129,7 @@
                             <p class="mb-1"><a href="#" class="text-decoration-none"
                                                style="color: black; font-weight: 500; font-size: 20px">{{ member.fio }}</a>
                             </p>
-                        <p style="color: rgba(0,0,0,0.44); font-size: 15px">{{ member.tg }}</p>
+                            <p style="color: rgba(0,0,0,0.44); font-size: 15px">{{ member.tg }}</p>
                             {% if member in current_club.admins.all %}
                                 <span class="fs-6">
                         <p style="color: rgba(0,0,0,0.44); font-size: 15px">Админ</p>
