@@ -1,0 +1,47 @@
+{% load static %}
+{% load club_filters %}
+
+<div class="container">
+            <h1 class="title-weight-section">Участники</h1><br>
+            <div class="row gy-5">
+
+                {% for member in members|list_content:param %}
+
+
+
+                    <div class="col-12 col-md-6 col-lg-3">
+
+                        {% if member.image %}
+
+                            <div class="mb-4 img-post-list"
+                                 style="background-image: url({{ member.image.url }}); border-radius: 25px; height: 250px">
+
+
+                        {% else %}
+
+                        {% endif %}
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-1"><a href="#" class="text-decoration-none"
+                                               style="color: black; font-weight: 500; font-size: 20px">{{ member.fio }}</a>
+                            </p>
+                            <p style="color: rgba(0,0,0,0.44); font-size: 15px">{{ member.tg }}</p>
+                            {% if member in current_club.admins.all %}
+                                <span class="fs-6">
+                        <p style="color: rgba(0,0,0,0.44); font-size: 15px">Админ</p>
+                    </span>
+                            {% else %}
+                                <span>
+                        <p style="color: rgba(0,0,0,0.44); font-size: 15px">Участник</p>
+                        </span>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+            <p>Еще...</p>
+        </div>

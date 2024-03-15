@@ -47,6 +47,7 @@ class CreateClub(LoginRequiredMixin, DataMixin, CreateView):
         form.instance.slug = slugify(form.instance.title)
         self.object = form.save()
         self.object.admins.add(self.request.user)
+        self.request.user.clubs.add(self.object)
         return super().form_valid(form)
 
 
@@ -104,7 +105,7 @@ class JoinClub(LoginRequiredMixin, FormView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy('app_clubs:profile_club', kwargs={'club_slug':self.kwargs['club_slug']})
+        return reverse_lazy('app_clubs:profile_club', kwargs={'club_slug': self.kwargs['club_slug']})
 
 
 class ApproveMembers(RequiredClubMember, FormView, ListView):
@@ -156,3 +157,15 @@ class CreateEvent(RequiredClubMember, DataMixin, CreateView):
 class HomePage(TemplateView):
     template_name = 'app_clubs/index.html'
     extra_context = {'cats': cats}
+
+
+class ShowContent(ListView):
+    template_name = 'app_clubs/show_content.html'
+
+    def get_queryset(self):
+        if self.kwargs['content'] == 'events':
+            return EventModel.objects.all()
+        if self.kwargs['content'] == 'posts':
+            return ModelPost.objects.all()
+
+

@@ -1,7 +1,7 @@
 {% extends 'app_clubs/base/base.html' %}
 {% load club_tags %}
 {% load static %}
-
+{% load club_filters %}
 {% block content %}
 
     <style>
@@ -22,135 +22,30 @@
 
     <div class="container">
         <h1 class="" style="font-size: 64px; font-weight: bold">{{ current_club }}</h1>
-        <!--    <img src="{{ current_club.image.url }}" style="width: 30%">-->
+        <h5>{{ current_club.tg }}</h5>
     </div>
 
     {% if request.user in current_club.admins.all %}
         <br>
         <div class="container">
-        <a class="btn btn-outline-secondary" href="{% url 'app_clubs:create_post' club_slug=current_club.slug %}">Создать
-            пост</a>
-        <a class="btn btn-outline-secondary" href="{% url 'app_clubs:create_event' club_slug=current_club.slug %}">Создать
-            событие</a>
-        <a class="btn btn-outline-secondary" href="{% url 'app_clubs:approve_members' club_slug=current_club.slug %}">Подтвердить участников</a>
+            <a class="btn btn-outline-secondary" href="{% url 'app_clubs:create_post' club_slug=current_club.slug %}">Создать
+                пост</a>
+            <a class="btn btn-outline-secondary" href="{% url 'app_clubs:create_event' club_slug=current_club.slug %}">Создать
+                событие</a>
+            <a class="btn btn-outline-secondary"
+               href="{% url 'app_clubs:approve_members' club_slug=current_club.slug %}">Подтвердить участников</a>
         </div>
     {% endif %}
 
     <br><br><br>
-    <div class="container">
-        <h2 class="title-weight-section">События</h2><br>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            {% for event in events %}
-
-                <div class="col">
-                    <div class="card h-100" style="background-color: #e8e8e8;">
-
-                        <div class="card-body">
-                            <a href="#" class="card-title text-decoration-none" style="color: black; font-weight: 700">
-                                {{ event.title }}</a><br><br>
-                            <a class="card-text text-decoration-none" href="#" style="color: black; font-weight: 500">
-                                {{ event.description|truncatechars:200|safe }}</a>
-                        </div>
-                    </div>
-                </div>
-
-            {% endfor %}
-
-        </div>
-        <br>
-        <p>Еще...</p>
-
-    </div>
-
+    {% include 'app_clubs/base/base_show_events.html' with param='3:3' %}
 
     <br><br><br>
+    {% include 'app_clubs/base/base_show_posts.html' with param='3:6' %}
 
+    <br><br><br>
+    {% include 'app_clubs/base/base_show_members.html' with param="4:4" %}
 
-    <div class="container">
-        <h2 class="title-weight-section">Статьи и новости</h2><br>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            {% for post in posts %}
-
-                <div class="col">
-                <div class="card h-100" style="border: none">
-
-                    {% if post.image %}
-                        <div class="img-post-list" style="background-image: url({{ post.image.url }});">
-                    {% else %}
-                        <div class="img-post-list"
-                             style="background-image: url({% static 'users/images/back_page_login.png' %});">
-                    {% endif %}
-
-                    <div class="card-img-overlay block-post-list">
-                        <div>
-                            <p class="card-text" style="color:white">Новости<i class="bi bi-dot"></i><small>9
-                                марта,
-                                2024</small></p>
-                            <h5 class="card-title" style="color: white; font-weight: 600">{{ post.title }}</h5>
-                        </div>
-
-
-                    </div>
-                    </div>
-
-
-                    </div>
-                </div>
-
-            {% endfor %}
-            </div>
-            <br>
-            <p>Еще...</p>
-
-        </div>
-        <br><br><br>
-
-        <div class="container">
-            <h1 class="title-weight-section">Участники</h1><br>
-            <div class="row gy-5">
-
-                {% for member in members %}
-
-
-
-                    <div class="col-12 col-md-6 col-lg-3">
-
-                        {% if member.image %}
-
-                            <div class="mb-4 img-post-list"
-                                 style="background-image: url({{ member.image.url }}); border-radius: 25px; height: 250px">
-
-
-                        {% else %}
-
-                        {% endif %}
-                        </div>
-                        <div class="mb-4">
-                            <p class="mb-1"><a href="#" class="text-decoration-none"
-                                               style="color: black; font-weight: 500; font-size: 20px">{{ member.fio }}</a>
-                            </p>
-                            <p style="color: rgba(0,0,0,0.44); font-size: 15px">{{ member.tg }}</p>
-                            {% if member in current_club.admins.all %}
-                                <span class="fs-6">
-                        <p style="color: rgba(0,0,0,0.44); font-size: 15px">Админ</p>
-                    </span>
-                            {% else %}
-                                <span>
-                        <p style="color: rgba(0,0,0,0.44); font-size: 15px">Участник</p>
-                        </span>
-                            {% endif %}
-
-                        </div>
-                    </div>
-
-                {% endfor %}
-
-            </div>
-
-            <p>Еще...</p>
-        </div>
-
-
-        <br><br><br><br><br>
+    <br><br><br>
 
 {% endblock %}

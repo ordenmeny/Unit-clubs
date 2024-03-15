@@ -6,7 +6,7 @@ from django import forms
 class ClubForm(ModelForm):
     class Meta:
         model = Club
-        fields = ('title', 'description', 'cat', 'moderate', 'image')
+        fields = ('title', 'description', 'tg', 'cat', 'moderate', 'image')
 
 
 class FormJoinClub(forms.Form):

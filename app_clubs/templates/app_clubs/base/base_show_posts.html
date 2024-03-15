@@ -1,0 +1,39 @@
+{% load static %}
+{% load club_filters %}
+
+<div class="container">
+    <h2 class="title-weight-section">Статьи и новости</h2><br>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for post in posts|list_content:param %}
+
+            <div class="col">
+                <div class="card h-100" style="border: none">
+
+                    {% if post.image %}
+                        <div class="img-post-list"
+                             style="background-image: url({{ post.image.url }});">
+                        </div>
+                    {% else %}
+                        <div class="img-post-list"
+                             style="background-image: url({% static 'users/images/back_page_login.png' %});">
+                        </div>
+                    {% endif %}
+
+                    <div class="card-img-overlay block-post-list">
+                        <div>
+                            <p class="card-text" style="color:white">Новости<i class="bi bi-dot"></i><small>9
+                                марта,
+                                2024</small></p>
+                            <h5 class="card-title" style="color: white; font-weight: 600">{{ post.title }}</h5>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+    <br>
+    <a href="{% url 'app_clubs:show_content' content='posts' %}">Еще...</a>
+</div>
