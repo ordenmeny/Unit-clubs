@@ -1,14 +1,60 @@
+{#{% extends 'app_clubs/base/base.html' %}#}
+{#{% load crispy_forms_filters %}#}
+{#{% load crispy_forms_tags %}#}
+{##}
+{##}
+{#{% block content %}#}
+{#    <br><br>#}
+{##}
+{#    <form method="post" class="container">{% csrf_token %}#}
+{#        {{ form.as_p }}#}
+{#        <input type="submit" value="Войти в клуб">#}
+{#    </form>#}
+{##}
+{#{% endblock %}#}
+
+
 {% extends 'app_clubs/base/base.html' %}
-{% load crispy_forms_filters %}
-{% load crispy_forms_tags %}
-
-
+{% load static %}
 {% block content %}
+
     <br><br>
 
-    <form method="post" class="container">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Войти в клуб">
-    </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-4">
+                {% if club.image %}
+                    <img src="{{ club.image.url }}" class="img-fluid rounded-start"
+                         style="height: 100%; width: 100%; object-fit: cover">
 
+                {% endif %}
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <h2>{{ club.title }}</h2><br>
+                <p style="font-size: 25px"><i class="bi bi-wallet2"></i> Бесплатно</p>
+                <p style="font-size: 25px"><i class="bi bi-person-exclamation"></i> Возрастные ограничения</p>
+                <p style="font-size: 25px"><i class="bi bi-geo-alt"></i> 8 марта, 23</p>
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+    <div class="container">
+        <h2 class="title-weight-section">Описание</h2><br>
+        <div class="row">
+            <div class="col-sm-12 col-md-8">
+                <p style="font-size: 25px">{{ club.description|truncatechars:1000 }}</p>
+
+                    <form method="post">{% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" value="Войти в клуб" class="btn join-btn">
+                    </form>
+
+            </div>
+        </div>
+    </div>
+
+
+    <br><br>
+
+    <br><br><br><br><br>
 {% endblock %}

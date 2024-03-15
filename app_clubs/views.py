@@ -45,7 +45,8 @@ class CreateClub(LoginRequiredMixin, DataMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.slug = slugify(form.instance.title)
-        # !!! Добавить добавления в админы
+        self.object = form.save()
+        self.object.admins.add(self.request.user)
         return super().form_valid(form)
 
 
@@ -74,6 +75,7 @@ class CreatePost(RequiredClubMember, DataMixin, CreateView):
     def form_valid(self, form):
         form.instance.slug = slugify(form.instance.title)
         form.instance.club = Club.objects.get(slug=self.kwargs['club_slug'])
+
         return super().form_valid(form)
 
 
@@ -94,6 +96,15 @@ class JoinClub(LoginRequiredMixin, FormView):
             # Если нужно модерировать
             current_club.not_approved.add(current_user)
             return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['club'] = Club.objects.get(slug=self.kwargs['club_slug'])
+
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('app_clubs:profile_club', kwargs={'club_slug':self.kwargs['club_slug']})
 
 
 class ApproveMembers(RequiredClubMember, FormView, ListView):
