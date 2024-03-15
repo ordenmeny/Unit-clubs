@@ -5,10 +5,14 @@
 
 {% block content %}
     <br><br>
-    <form method="POST" class="container" enctype="multipart/form-data">
+<div class="container">
+    <h2>Создать клуб</h2><br>
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}
-        <button type="submit">Создать клуб</button>
+        <button type="submit" class="btn btn-secondary">Создать клуб</button>
     </form>
+
+</div>
     <br><br><br>
 {% endblock %}
