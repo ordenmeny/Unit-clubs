@@ -5,49 +5,70 @@
     <br><br>
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
-                <div class="card mb-3" style="max-width: 540px; border: 1px solid #FFFFFF">
-                    <div class="row g-0">
-                        <div class="col-md-6">
-
-                            {% if request.user.image %}
-                                <img src="{{ request.user.image.url }}" class="img-fluid rounded-start"
-                                     style="height: 100%; width: 100%; object-fit: cover">
-
-                            {% endif %}
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card-body">
-                                <h2 class="card-title">{{ request.user.first_name }}</h2>
-                                <h2 class="card-title">{{ request.user.last_name }}</h2>
-                                <p class="card-text">This is a wider card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit longer.</p>
-                                </p>
-                                <button class="btn btn-secondary btn-black-white">Редактировать профиль</button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="col-md-4">
-                <div style="width: 100%">
-                    <br>
-                    <h3>Уведомления</h3><br>
-                    <p><i class="bi bi-clock"></i>
-                        Перенос занятия клуба "Шахматы"</p>
-                    <hr>
-                    <p><i class="bi bi-clock"></i>
-                        {{ "Встреча клуба NewsMobile состоится в Главном офисе яндекс студио про"|truncatewords:5 }}</p>
-                    <hr>
-                    <p><i class="bi bi-clock"></i>
-                        {{ "Клуб NewsMobile предлагает ..."|truncatewords:5 }}</p>
-                    <hr>
-                    <p>Еще...</p>
+                {% if request.user.image %}
+                    <img src="{{ request.user.image.url }}" class="img-fluid rounded-start"
+                         style="height: 300px; width: 100%; object-fit: cover">
+
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <div class="card-body">
+                    <h2 class="card-title">{{ request.user.first_name }}</h2>
+                    <h2 class="card-title">{{ request.user.last_name }}</h2>
+                    <p class="card-text">{{ request.user.desc|truncatechars:200 }}</p>
+                    <button class="btn btn-secondary btn-black-white">Редактировать профиль</button>
                 </div>
             </div>
         </div>
     </div>
+
+
+
+    <br><br>
+{#    <div class="container">#}
+{#        <div class="row">#}
+{#            <div class="col-md-6">#}
+{#                <div class="card mb-3" style="max-width: 540px; border: 1px solid #FFFFFF">#}
+{#                    <div class="row g-0">#}
+{#                        <div class="col-md-6">#}
+{##}
+{#                            {% if request.user.image %}#}
+{#                                <img src="{{ request.user.image.url }}" class="img-fluid rounded-start"#}
+{#                                     style="height: 300px; width: 100%; object-fit: cover">#}
+{##}
+{#                            {% endif %}#}
+{#                        </div>#}
+{#                        <div class="col-md-6">#}
+{#                            <div class="card-body">#}
+{#                                <h2 class="card-title">{{ request.user.first_name }}</h2>#}
+{#                                <h2 class="card-title">{{ request.user.last_name }}</h2>#}
+{#                                <p class="card-text">{{ request.user.desc|truncatechars:200 }}</p>#}
+{#                                <button class="btn btn-secondary btn-black-white">Редактировать профиль</button>#}
+{#                            </div>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-md-2" style="border: 1px solid red">#}
+{#                <div style="width: 100%">#}
+{#                    <br>#}
+{#                    <h3>Уведомления</h3><br>#}
+{#                    <p><i class="bi bi-clock"></i>#}
+{#                        Перенос занятия клуба "Шахматы"</p>#}
+{#                    <hr>#}
+{#                    <p><i class="bi bi-clock"></i>#}
+{#                        {{ "Встреча клуба NewsMobile состоится в Главном офисе яндекс студио про"|truncatewords:5 }}</p>#}
+{#                    <hr>#}
+{#                    <p><i class="bi bi-clock"></i>#}
+{#                        {{ "Клуб NewsMobile предлагает ..."|truncatewords:5 }}</p>#}
+{#                    <hr>#}
+{#                    <p>Еще...</p>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 
 
 
@@ -80,7 +101,7 @@
 
 
     <div class="container">
-    <h1 class="title-weight-section">Мои клубы</h1><br>
+        <h1 class="title-weight-section">Мои клубы</h1><br>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for club in my_clubs %}
 

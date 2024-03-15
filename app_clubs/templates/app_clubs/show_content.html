@@ -22,8 +22,10 @@
 
     </style>
     {% if type_content == 'events' %}
+        <br>
         {% include 'app_clubs/base/base_show_events.html' with param="None" %}
     {% elif type_content == 'posts' %}
+        <br>
         {% include 'app_clubs/base/base_show_posts.html' with param="None" %}
 
     {% endif %}

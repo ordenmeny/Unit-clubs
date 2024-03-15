@@ -9,14 +9,14 @@
             <div class="col-lg-6" style="border-right: 1px solid #101820;">
                 <br><br><br>
                 <div class="ms-5">
-                    <a href="#" class="text-section-2">Хочу изучить <br>существующие клубы</a>
+                    <a href="{% url 'app_clubs:list_clubs' cat='all' %}" class="text-section-2">Хочу изучить <br>существующие клубы</a>
                 </div>
                 <br>
             </div>
             <div class="col-lg-6">
                 <br><br><br>
                 <div class="ms-5">
-                    <a href="#" class="text-section-2">Хочу создать <br>свой клуб</a>
+                    <a href="{% url 'app_clubs:create_club' %}" class="text-section-2">Хочу создать <br>свой клуб</a>
                 </div>
             </div>
         </div>

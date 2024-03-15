@@ -90,3 +90,9 @@
     font-size: 54px;
     border-radius: 0px !important;
 }
+
+.more{
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 15px;
+    text-decoration: none;
+}
