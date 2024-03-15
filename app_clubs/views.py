@@ -15,6 +15,7 @@ class ProfileUser(LoginRequiredMixin, DataMixin, TemplateView):
     template_name = 'app_clubs/profile_user.html'
     item_selected = 'profile_user'
 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['my_clubs'] = self.request.user.clubs.all()
@@ -160,12 +161,19 @@ class HomePage(TemplateView):
 
 
 class ShowContent(ListView):
-    template_name = 'app_clubs/show_content.html'
+    template_name = None
+    extra_context = {'param': 'None'}
 
     def get_queryset(self):
         if self.kwargs['content'] == 'events':
+            self.template_name = 'app_clubs/show_content.html'
+            self.context_object_name = 'events'
+            self.model = EventModel
+            self.extra_context['type_content'] = 'events'
             return EventModel.objects.all()
         if self.kwargs['content'] == 'posts':
+            self.model = ModelPost
+            self.template_name = 'app_clubs/show_content.html'
+            self.context_object_name = 'posts'
+            self.extra_context['type_content'] = 'posts'
             return ModelPost.objects.all()
-
-
