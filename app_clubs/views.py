@@ -160,20 +160,27 @@ class HomePage(TemplateView):
     extra_context = {'cats': cats}
 
 
-class ShowContent(ListView):
-    template_name = None
+class ShowContent(RequiredClubMember, ListView):
     extra_context = {'param': 'None'}
+    template_name = 'app_clubs/show_content.html'
 
     def get_queryset(self):
-        if self.kwargs['content'] == 'events':
-            self.template_name = 'app_clubs/show_content.html'
-            self.context_object_name = 'events'
+        content_type = self.kwargs['content']
+        if content_type not in ('events', 'posts', 'members'):
+            return redirect('app_clubs:home_page')
+        self.extra_context['content_type'] = content_type
+        self.extra_context['current_club'] = self.request.current_club
+        self.context_object_name = content_type
+
+        if content_type == 'events':
             self.model = EventModel
-            self.extra_context['type_content'] = 'events'
-            return EventModel.objects.all()
-        if self.kwargs['content'] == 'posts':
+            print(EventModel.objects.filter(club=self.request.current_club))
+            return EventModel.objects.filter(club=self.request.current_club)
+
+        if content_type == 'posts':
             self.model = ModelPost
-            self.template_name = 'app_clubs/show_content.html'
-            self.context_object_name = 'posts'
-            self.extra_context['type_content'] = 'posts'
-            return ModelPost.objects.all()
+            return ModelPost.objects.filter(club=self.request.current_club)
+
+        if content_type == 'members':
+            self.model = get_user_model()
+            return get_user_model().objects.filter(clubs=self.request.current_club)

@@ -24,6 +24,6 @@
 
     </div>
     <br>
-    <a href="{% url 'app_clubs:show_content' content='events' %}" class="more">Еще...</a>
+    <a href="{% url 'app_clubs:show_content' club_slug=current_club.slug content='events' %}" class="more">Еще...</a>
 
 </div>

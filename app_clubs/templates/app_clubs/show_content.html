@@ -21,13 +21,18 @@
 
 
     </style>
-    {% if type_content == 'events' %}
+
+    {% if content_type == 'events' %}
         <br>
         {% include 'app_clubs/base/base_show_events.html' with param="None" %}
-    {% elif type_content == 'posts' %}
+    {% elif content_type == 'posts' %}
         <br>
         {% include 'app_clubs/base/base_show_posts.html' with param="None" %}
-
+    {% elif content_type == 'members' %}
+        <br>
+        {% include 'app_clubs/base/base_show_members.html' with param="None" %}
+    {% else %}
+        <h1>{{ content_type }}</h1>
     {% endif %}
 {% endblock %}
 {#</body>#}

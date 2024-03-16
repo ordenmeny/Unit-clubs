@@ -30,10 +30,10 @@ class RequiredClubMember(LoginRequiredMixin):
         if not (current_club in current_user.clubs.all()):
             return redirect(reverse_lazy('app_clubs:home_page'))
 
+        request.current_club = current_club
         # Является ли страница только для админов? Проверка на админство
         if self.for_admin:
             if request.user not in current_club.admins.all():
                 return redirect(reverse_lazy('app_clubs:home_page'))
 
-        request.current_club = current_club
         return super().dispatch(request, *args, **kwargs)
