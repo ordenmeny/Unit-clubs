@@ -24,7 +24,7 @@
         <h1 class="" style="font-size: 64px; font-weight: bold">{{ current_club }}</h1>
         <h5>{{ current_club.tg }}</h5>
     </div>
-
+<hr>
     {% if request.user in current_club.admins.all %}
         <br>
         <div class="container">
@@ -34,10 +34,10 @@
                 событие</a>
             <a class="btn btn-outline-secondary"
                href="{% url 'app_clubs:approve_members' club_slug=current_club.slug %}">Подтвердить участников</a>
-        </div>
+        </div><br>
     {% endif %}
 
-    <br><br><br>
+    <br>
     {% include 'app_clubs/base/base_show_events.html' with param='3:3' %}
 
     <br><br><br>

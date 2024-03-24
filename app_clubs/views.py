@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.utils.text import slugify
 from django.views import View
-from django.views.generic import CreateView, UpdateView, ListView, TemplateView, FormView, DetailView
+from django.views.generic import CreateView, UpdateView, ListView, TemplateView, FormView, DetailView, DeleteView
 from .models import *
 from .forms import *
 from django.urls import reverse_lazy
@@ -79,6 +79,7 @@ class CreatePost(RequiredClubMember, DataMixin, CreateView):
     def form_valid(self, form):
         form.instance.slug = slugify(form.instance.title[:40] + f'{self.request.current_club}')
         form.instance.club = self.request.current_club
+        form.instance.author = self.request.user
 
         return super().form_valid(form)
 
@@ -189,11 +190,17 @@ class ShowContent(RequiredClubMember, ListView):
             return get_user_model().objects.filter(clubs=self.request.current_club)
 
 
-class DetailPost(DetailView):
+class DetailPost(RequiredClubMember, DetailView):
     model = ModelPost
     template_name = 'app_clubs/detail_post.html'
     slug_url_kwarg = 'post_slug'
     context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['club'] = self.request.current_club
+
+        return context
 
 
 class PageError(TemplateView):
@@ -208,3 +215,14 @@ class PageError(TemplateView):
             context['text_error'] = 'Доступ запрещен'
 
         return context
+
+
+class DeletePost(RequiredClubMember, DeleteView):
+    model = ModelPost
+    template_name = 'app_clubs/delete_post.html'
+    slug_url_kwarg = 'post_slug'
+    for_admin = True
+
+    def get_success_url(self):
+        messages.success(self.request, 'Пост удален')
+        return reverse_lazy('app_clubs:profile_club', kwargs={'club_slug': self.kwargs['club_slug']})

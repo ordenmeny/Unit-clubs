@@ -2,9 +2,13 @@
 
 {% block content %}
     <div class="container">
+
     <br>
         <h1>{{ post.title }}</h1>
         <p style="font-size: 40px !important;">{{ post.text|safe }}</p>
+    {% if request.user in club.admins.all %}
+        <a href="{% url 'app_clubs:delete_post' post_slug=post.slug club_slug=post.club.slug %}" class="btn btn-danger">Удалить</a>
+    {% endif %}
     </div>
 
 {% endblock %}

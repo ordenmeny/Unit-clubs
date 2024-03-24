@@ -9,6 +9,7 @@ urlpatterns = [
     path('<slug:cat>/list-clubs/', views.ListClubs.as_view(), name='list_clubs'),
     path('profile-user/', views.ProfileUser.as_view(), name='profile_user'),
     path('page-error/<slug:type_error>/', views.PageError.as_view(), name='page_error'),
+    path('<slug:club_slug>/delete-post/<slug:post_slug>', views.DeletePost.as_view(), name='delete_post'),
     # URLs for clubs
     path('<slug:club_slug>/join-club/', views.JoinClub.as_view(), name='join_club'),
     path('<slug:club_slug>/create-post/', views.CreatePost.as_view(), name='create_post'),

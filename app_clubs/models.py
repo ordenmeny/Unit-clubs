@@ -63,6 +63,7 @@ class ModelPost(BaseModel):
                              verbose_name='Изображение')
     datetime = models.DateField(blank=True, null=True, default=datetime.date.today)
     type_content = models.CharField(max_length=32, choices=type_content_choices, verbose_name='Тип поста', null=True, blank=True)
+    author = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'Посты'

@@ -9,6 +9,11 @@ class ClubAdmin(admin.ModelAdmin):
     list_display_links = common_fields
 
 
-admin.site.register(Club, ClubAdmin)
+class ClubAdmin2(admin.ModelAdmin):
+    list_display = ('title', 'slug')
+    list_display_links = ('title', 'slug')
+
+
+admin.site.register(Club, ClubAdmin2)
 admin.site.register(ModelPost)
 admin.site.register(EventModel, ClubAdmin)
