@@ -16,12 +16,13 @@ class FormJoinClub(forms.Form):
 class FormPost(ModelForm):
     class Meta:
         model = ModelPost
-        fields = ['title', 'text', 'image']
+        fields = ['title', 'text', 'image', 'type_content']
 
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'text': forms.TextInput(attrs={'class': 'form-control', 'size': '40'}),
             'image': forms.FileInput(attrs={'class': 'form-control'}),
+            'type_content': forms.Select(attrs={'class': 'form-select form-select-lg mb-3'}),
         }
 
 

@@ -1,6 +1,8 @@
 {% load static %}
 {% load club_filters %}
 
+
+
 <div class="container">
     <h2 class="title-weight-section">Статьи и новости</h2><br>
     <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -21,9 +23,7 @@
 
                     <div class="card-img-overlay block-post-list">
                         <div>
-                            <p class="card-text" style="color:white">Новости<i class="bi bi-dot"></i><small>9
-                                марта,
-                                2024</small></p>
+                            <p class="card-text" style="color:white">{{ post.get_type_content_display  }}<i class="bi bi-dot"></i><small>{{ post.datetime }}</small></p>
                             <a href="{% url 'app_clubs:detail_post' club_slug=current_club.slug post_slug=post.slug %}" class="text-decoration-none">
                                 <h5 class="card-title" style="color: white; font-weight: 600">{{ post.title }}</h5>
                             </a>

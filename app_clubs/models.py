@@ -1,3 +1,4 @@
+import datetime as datetime
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.conf import settings
@@ -52,17 +53,23 @@ class Club(BaseModel):
 
 
 class ModelPost(BaseModel):
-    # text = models.TextField(blank=True, null=True, verbose_name='Текст')
+    type_content_choices = [
+        ('news', 'Новости'),
+        ('article', 'Статьи'),
+    ]
+
     text = RichTextField(blank=True, null=True, verbose_name="Текст")
     image = models.FileField(upload_to='uploads/posts/', default=None, null=True, blank=True,
                              verbose_name='Изображение')
+    datetime = models.DateField(blank=True, null=True, default=datetime.date.today)
+    type_content = models.CharField(max_length=32, choices=type_content_choices, verbose_name='Тип поста', null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'Посты'
+        ordering = ['-datetime']
 
 
 class EventModel(BaseModel):
-    # description = models.TextField(blank=True, null=True, verbose_name="Описание события")
     description = RichTextField(blank=True, null=True, verbose_name="Описание события")
     format = models.CharField(max_length=16, choices=BaseModel.format_choices, verbose_name="Формат проведения")
 

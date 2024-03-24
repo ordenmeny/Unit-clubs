@@ -42,7 +42,8 @@ class CreateClub(LoginRequiredMixin, DataMixin, CreateView):
     item_selected = 'create_club'
 
     def get_success_url(self):
-        return reverse_lazy('app_clubs:create_club')
+        messages.success(self.request, 'Клуб успешно создан')
+        return reverse_lazy('app_clubs:list_clubs', kwargs={'cat': 'all'})
 
     def form_valid(self, form):
         form.instance.slug = slugify(form.instance.title)
@@ -72,7 +73,8 @@ class CreatePost(RequiredClubMember, DataMixin, CreateView):
     item_selected = 'create_post'
 
     def get_success_url(self):
-        return reverse_lazy('app_clubs:home_page')
+        messages.success(self.request, 'Пост создан')
+        return reverse_lazy('app_clubs:profile_club', kwargs={'club_slug': self.kwargs['club_slug']})
 
     def form_valid(self, form):
         form.instance.slug = slugify(form.instance.title[:40] + f'{self.request.current_club}')
@@ -81,7 +83,6 @@ class CreatePost(RequiredClubMember, DataMixin, CreateView):
         return super().form_valid(form)
 
 
-# canqod-0nidho-maCqoh
 class JoinClub(LoginRequiredMixin, FormView):
     template_name = 'app_clubs/join_club.html'
     form_class = FormJoinClub
@@ -154,7 +155,8 @@ class CreateEvent(RequiredClubMember, DataMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('app_clubs:create_event', kwargs={'club_slug': self.kwargs['club_slug']})
+        messages.success(self.request, 'Событие создано')
+        return reverse_lazy('app_clubs:profile_club', kwargs={'club_slug': self.kwargs['club_slug']})
 
 
 class HomePage(TemplateView):

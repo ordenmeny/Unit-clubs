@@ -23,17 +23,22 @@ class RequiredClubMember(LoginRequiredMixin):
     for_admin = False
 
     def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect(reverse_lazy('app_clubs:page_error', kwargs={'type_error': '403'}))
+
+
         # получаем объекты пользователя и клуба
         current_user = request.user
         current_club = Club.objects.get(slug=self.kwargs['club_slug'])
         # делаем проверку, есть ли такой клуб у пользователя. Если нет-редирект!
         if not (current_club in current_user.clubs.all()):
-            return redirect(reverse_lazy('app_clubs:home_page'))
+            return redirect(reverse_lazy('app_clubs:page_error', kwargs={'type_error': '403'}))
+            # return redirect(reverse_lazy('app_clubs:home_page'))
 
         request.current_club = current_club
         # Является ли страница только для админов? Проверка на админство
         if self.for_admin:
             if request.user not in current_club.admins.all():
-                return redirect(reverse_lazy('app_clubs:home_page'))
+                return redirect(reverse_lazy('app_clubs:page_error', kwargs={'type_error': '403'}))
 
         return super().dispatch(request, *args, **kwargs)
