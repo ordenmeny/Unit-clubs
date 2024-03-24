@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.utils.text import slugify
 from django.views import View
-from django.views.generic import CreateView, UpdateView, ListView, TemplateView, FormView
+from django.views.generic import CreateView, UpdateView, ListView, TemplateView, FormView, DetailView
 from .models import *
 from .forms import *
 from django.urls import reverse_lazy
@@ -9,12 +9,12 @@ from django.contrib.auth import get_user_model
 from .utils import DataMixin, RequiredClubMember
 from django.contrib.auth.mixins import LoginRequiredMixin
 from pytils.translit import slugify
+from django.contrib import messages
 
 
 class ProfileUser(LoginRequiredMixin, DataMixin, TemplateView):
     template_name = 'app_clubs/profile_user.html'
     item_selected = 'profile_user'
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -75,16 +75,16 @@ class CreatePost(RequiredClubMember, DataMixin, CreateView):
         return reverse_lazy('app_clubs:home_page')
 
     def form_valid(self, form):
-        form.instance.slug = slugify(form.instance.title)
-        form.instance.club = Club.objects.get(slug=self.kwargs['club_slug'])
+        form.instance.slug = slugify(form.instance.title[:40] + f'{self.request.current_club}')
+        form.instance.club = self.request.current_club
 
         return super().form_valid(form)
 
 
+# canqod-0nidho-maCqoh
 class JoinClub(LoginRequiredMixin, FormView):
     template_name = 'app_clubs/join_club.html'
     form_class = FormJoinClub
-    success_url = reverse_lazy('app_clubs:home_page')
 
     def form_valid(self, form):
         current_user = self.request.user
@@ -96,6 +96,7 @@ class JoinClub(LoginRequiredMixin, FormView):
             return super().form_valid(form)
         else:
             # Если нужно модерировать
+            # Просходит добавление пользователя в раздел not_approved
             current_club.not_approved.add(current_user)
             return super().form_valid(form)
 
@@ -106,6 +107,7 @@ class JoinClub(LoginRequiredMixin, FormView):
         return context
 
     def get_success_url(self):
+        messages.success(self.request, 'Вы были добавлены в клуб')
         return reverse_lazy('app_clubs:profile_club', kwargs={'club_slug': self.kwargs['club_slug']})
 
 
@@ -120,7 +122,7 @@ class ApproveMembers(RequiredClubMember, FormView, ListView):
         user_id = self.request.POST['user_id']
         user_to_approve = get_user_model().objects.get(pk=user_id)
 
-        current_club = Club.objects.get(slug=self.kwargs["club_slug"])
+        current_club = self.request.current_club
 
         current_club.not_approved.remove(user_to_approve)
         user_to_approve.clubs.add(current_club)
@@ -147,7 +149,7 @@ class CreateEvent(RequiredClubMember, DataMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.slug = slugify(form.instance.title)
-        current_club = Club.objects.get(slug=self.kwargs['club_slug'])
+        current_club = self.request.current_club
         form.instance.club = current_club
         return super().form_valid(form)
 
@@ -174,7 +176,6 @@ class ShowContent(RequiredClubMember, ListView):
 
         if content_type == 'events':
             self.model = EventModel
-            print(EventModel.objects.filter(club=self.request.current_club))
             return EventModel.objects.filter(club=self.request.current_club)
 
         if content_type == 'posts':
@@ -184,3 +185,24 @@ class ShowContent(RequiredClubMember, ListView):
         if content_type == 'members':
             self.model = get_user_model()
             return get_user_model().objects.filter(clubs=self.request.current_club)
+
+
+class DetailPost(DetailView):
+    model = ModelPost
+    template_name = 'app_clubs/detail_post.html'
+    slug_url_kwarg = 'post_slug'
+    context_object_name = 'post'
+
+
+class PageError(TemplateView):
+    template_name = 'app_clubs/page_error.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        error = self.kwargs['type_error']
+        if error == '404':
+            context['text_error'] = 'Страница не найдена'
+        if self.kwargs['type_error'] == '403':
+            context['text_error'] = 'Доступ запрещен'
+
+        return context

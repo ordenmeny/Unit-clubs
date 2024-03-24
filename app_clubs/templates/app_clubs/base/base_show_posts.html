@@ -24,7 +24,9 @@
                             <p class="card-text" style="color:white">Новости<i class="bi bi-dot"></i><small>9
                                 марта,
                                 2024</small></p>
-                            <h5 class="card-title" style="color: white; font-weight: 600">{{ post.title }}</h5>
+                            <a href="{% url 'app_clubs:detail_post' club_slug=current_club.slug post_slug=post.slug %}" class="text-decoration-none">
+                                <h5 class="card-title" style="color: white; font-weight: 600">{{ post.title }}</h5>
+                            </a>
                         </div>
 
 

@@ -52,7 +52,8 @@ class Club(BaseModel):
 
 
 class ModelPost(BaseModel):
-    text = models.TextField(blank=True, null=True, verbose_name='Текст')
+    # text = models.TextField(blank=True, null=True, verbose_name='Текст')
+    text = RichTextField(blank=True, null=True, verbose_name="Текст")
     image = models.FileField(upload_to='uploads/posts/', default=None, null=True, blank=True,
                              verbose_name='Изображение')
 

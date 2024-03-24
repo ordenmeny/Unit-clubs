@@ -16,6 +16,7 @@
                         <a class="card-text text-decoration-none" href="#"
                            style="color: black; font-weight: 500">
                             {{ part.description|truncatechars:200|safe }}</a>
+
                     </div>
                 </div>
             </div>
@@ -24,6 +25,7 @@
 
     </div>
     <br>
-    <a href="{% url 'app_clubs:show_content' club_slug=current_club.slug content='events' %}" class="more">Еще...</a>
+    <a href="{% url 'app_clubs:show_content' club_slug=current_club.slug content='events' %}"
+       class="more">Еще...</a>
 
 </div>

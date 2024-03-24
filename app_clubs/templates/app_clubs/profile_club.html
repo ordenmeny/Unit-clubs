@@ -21,6 +21,17 @@
     </style>
 
     <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <br>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Вы вошли в клуб!</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+
         <h1 class="" style="font-size: 64px; font-weight: bold">{{ current_club }}</h1>
         <h5>{{ current_club.tg }}</h5>
     </div>

@@ -18,6 +18,12 @@ class FormPost(ModelForm):
         model = ModelPost
         fields = ['title', 'text', 'image']
 
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'text': forms.TextInput(attrs={'class': 'form-control', 'size': '40'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+        }
+
 
 class FormEvent(ModelForm):
     class Meta:
