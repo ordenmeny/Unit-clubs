@@ -62,7 +62,15 @@
                 {{ form.password1 }}<br>
                 {{ form.password2 }}<br>
 
+                {% if type_btn %}
+
+                <button class="btn btn-secondary w-100 py-2" type="submit">{{ type_btn }}</button>
+                {% else %}
                 <button class="btn btn-secondary w-100 py-2" type="submit">Зарегистрироваться</button>
+
+                {% endif %}
+
+
                 <br><br>
                 <a class="btn btn-outline-secondary w-100 py-2" href="{% url 'users:login' %}">Войти</a>
             </form>

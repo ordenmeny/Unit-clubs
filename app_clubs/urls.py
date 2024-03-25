@@ -11,6 +11,8 @@ urlpatterns = [
     path('page-error/<slug:type_error>/', views.PageError.as_view(), name='page_error'),
     path('<slug:club_slug>/delete-post/<slug:post_slug>', views.DeletePost.as_view(), name='delete_post'),
     path('<slug:club_slug>/edit-post/<slug:post_slug>', views.UpdatePost.as_view(), name='edit_post'),
+    path('<slug:club_slug>/edit-club/', views.UpdateClubProfile.as_view(), name='edit_club_profile'),
+
     # URLs for clubs
     path('<slug:club_slug>/join-club/', views.JoinClub.as_view(), name='join_club'),
     path('<slug:club_slug>/create-post/', views.CreatePost.as_view(), name='create_post'),

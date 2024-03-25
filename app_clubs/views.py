@@ -236,10 +236,21 @@ class DeletePost(RequiredClubMember, DeleteView):
 class UpdatePost(RequiredClubMember, UpdateView):
     model = ModelPost
     form_class = FormPost
-    # fields = ['title', 'text', 'image', 'type_content']
     template_name = 'app_clubs/create_post.html'
     slug_url_kwarg = 'post_slug'
 
     def get_success_url(self):
         messages.success(self.request, 'Пост изменен')
+        return reverse_lazy('app_clubs:profile_club', kwargs={'club_slug': self.kwargs['club_slug']})
+
+
+class UpdateClubProfile(RequiredClubMember, UpdateView):
+    model = Club
+    form_class = ClubForm
+    template_name = 'app_clubs/create_club.html'
+    slug_url_kwarg = 'club_slug'
+    for_admin = True
+
+    def get_success_url(self):
+        messages.success(self.request, 'Профиль клуба изменен')
         return reverse_lazy('app_clubs:profile_club', kwargs={'club_slug': self.kwargs['club_slug']})

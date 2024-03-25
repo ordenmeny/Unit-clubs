@@ -1,9 +1,10 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
-from .forms import UserForm, LoginForm
+from .forms import *
 from django.contrib import messages
 
 
@@ -25,11 +26,11 @@ class SignUp(CreateView):
         return reverse_lazy('users:login')
 
 
-class UpdateProfile(UpdateView):
+class UpdateProfile(LoginRequiredMixin, UpdateView):
     model = get_user_model()
-    form_class = UserForm
+    form_class = CustomUserChangeForm
     template_name = 'users/signup.html'
-    # slug_url_kwarg = 'post_slug'
+    extra_context = {'type_btn': 'Сохранить'}
 
     def get_success_url(self):
         messages.success(self.request, 'Профиль изменен')
