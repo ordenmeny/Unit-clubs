@@ -8,6 +8,8 @@
         <p style="font-size: 40px !important;">{{ post.text|safe }}</p>
     {% if request.user in club.admins.all %}
         <a href="{% url 'app_clubs:delete_post' post_slug=post.slug club_slug=post.club.slug %}" class="btn btn-danger">Удалить</a>
+        <a href="{% url 'app_clubs:edit_post' post_slug=post.slug club_slug=post.club.slug %}" class="btn btn-secondary">Изменить</a>
+
     {% endif %}
     </div>
 

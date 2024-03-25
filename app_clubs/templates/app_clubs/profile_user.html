@@ -17,7 +17,7 @@
                     <h2 class="card-title">{{ request.user.first_name }}</h2>
                     <h2 class="card-title">{{ request.user.last_name }}</h2>
                     <p class="card-text">{{ request.user.desc|truncatechars:200 }}</p>
-                    <button class="btn btn-secondary btn-black-white">Редактировать профиль</button>
+                    <a href="{% url 'users:edit_profile' pk=request.user.pk %}" class="btn btn-secondary btn-black-white">Редактировать профиль</a>
                 </div>
             </div>
         </div>

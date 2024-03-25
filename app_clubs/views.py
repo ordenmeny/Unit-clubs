@@ -169,10 +169,15 @@ class ShowContent(RequiredClubMember, ListView):
     extra_context = {'param': 'None'}
     template_name = 'app_clubs/show_content.html'
 
-    def get_queryset(self):
+    def dispatch(self, request, *args, **kwargs):
         content_type = self.kwargs['content']
         if content_type not in ('events', 'posts', 'members'):
-            return redirect('app_clubs:home_page')
+            return redirect(reverse_lazy('app_clubs:page_error', kwargs={'type_error': '404'}))
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        content_type = self.kwargs['content']
         self.extra_context['content_type'] = content_type
         self.extra_context['current_club'] = self.request.current_club
         self.context_object_name = content_type
@@ -225,4 +230,16 @@ class DeletePost(RequiredClubMember, DeleteView):
 
     def get_success_url(self):
         messages.success(self.request, 'Пост удален')
+        return reverse_lazy('app_clubs:profile_club', kwargs={'club_slug': self.kwargs['club_slug']})
+
+
+class UpdatePost(RequiredClubMember, UpdateView):
+    model = ModelPost
+    form_class = FormPost
+    # fields = ['title', 'text', 'image', 'type_content']
+    template_name = 'app_clubs/create_post.html'
+    slug_url_kwarg = 'post_slug'
+
+    def get_success_url(self):
+        messages.success(self.request, 'Пост изменен')
         return reverse_lazy('app_clubs:profile_club', kwargs={'club_slug': self.kwargs['club_slug']})
