@@ -24,5 +24,5 @@ urlpatterns = [
     path('<slug:club_slug>/detail-post/<slug:post_slug>/', views.DetailPost.as_view(), name='detail_post'),
     path('<slug:club_slug>/send-msg/<int:pk>/', views.SendMsg.as_view(), name='send_msg'),
     path('<slug:club_slug>/my-notifs/', views.MyNotifs.as_view(), name='my_notifs'),
-
+    path('<slug:club_slug>/delete-notifs/<int:pk>', views.DeleteNotifs.as_view(), name='delete_notifs'),
 ]

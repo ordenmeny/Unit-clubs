@@ -36,6 +36,9 @@
                href="{% url 'app_clubs:approve_members' club_slug=current_club.slug %}">Подтвердить участников</a>
             <a class="btn btn-outline-secondary"
                href="{% url 'app_clubs:edit_club_profile' club_slug=current_club.slug %}">Редактировать профиль</a>
+
+            <a class="btn btn-outline-secondary"
+               href="{% url 'app_clubs:edit_club_profile' club_slug=current_club.slug %}">Сделать рассылку</a>
         </div><br>
     {% endif %}
     <div class="container">

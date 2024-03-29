@@ -54,6 +54,7 @@ class SendMsg(RequiredClubMember, CreateView):
 
     def form_valid(self, form):
         form.instance.sender = self.request.user
+        form.instance.club = self.request.current_club
         receiver = get_user_model().objects.get(pk=self.kwargs['pk'])
         self.object = form.save()
         self.object.receiver.add(receiver)
@@ -294,7 +295,6 @@ class UpdateClubProfile(RequiredClubMember, UpdateView):
         return reverse_lazy('app_clubs:profile_club', kwargs={'club_slug': self.kwargs['club_slug']})
 
 
-
 class MyNotifs(RequiredClubMember, ListView):
     template_name = 'app_clubs/my_msg.html'
     context_object_name = 'notifs'
@@ -302,3 +302,19 @@ class MyNotifs(RequiredClubMember, ListView):
 
     def get_queryset(self):
         return Notifs.objects.filter(receiver=self.request.user)
+
+
+class DeleteNotifs(RequiredClubMember, DeleteView):
+    model = Notifs
+    template_name = 'app_clubs/delete_msg.html'
+
+    def get_success_url(self):
+        messages.success(self.request, 'Сообщение удалено')
+        return reverse_lazy('app_clubs:my_notifs', kwargs={'club_slug': self.kwargs['club_slug']})
+
+    def dispatch(self, request, *args, **kwargs):
+        # проверяем, адресовано ли это сообщение текущему пользователю
+        if request.user not in Notifs.objects.get(pk=self.kwargs['pk']).receiver.all():
+            return redirect(reverse_lazy('app_clubs:page_error', kwargs={'type_error': '403'}))
+
+        return super().dispatch(request, *args, **kwargs)
