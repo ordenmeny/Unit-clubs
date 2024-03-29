@@ -14,6 +14,12 @@ class ClubAdmin2(admin.ModelAdmin):
     list_display_links = ('title', 'slug')
 
 
+class NotifsAdmin(admin.ModelAdmin):
+    list_display = ('text', 'timestamp')
+    list_display_links = ('text', )
+
+
 admin.site.register(Club, ClubAdmin2)
 admin.site.register(ModelPost)
 admin.site.register(EventModel, ClubAdmin)
+admin.site.register(Notifs, NotifsAdmin)

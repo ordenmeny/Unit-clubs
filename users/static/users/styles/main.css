@@ -38,3 +38,7 @@
     /*display: block;*/
 }
 
+
+.input-file-opacity{
+    background-color: rgba(170, 161, 161, 0.74) !important;
+}

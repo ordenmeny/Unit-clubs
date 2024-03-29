@@ -22,7 +22,7 @@
                 {% endif %}
                 </div>
                 <div class="mb-4">
-                    <p class="mb-1"><a href="#" class="text-decoration-none"
+                    <p class="mb-1"><a href="{% url 'app_clubs:profile_user_club' club_slug=current_club.slug pk=member.pk %}" class="text-decoration-none"
                                        style="color: black; font-weight: 500; font-size: 20px">{{ member.fio }}</a>
                     </p>
                     <p style="color: rgba(0,0,0,0.44); font-size: 15px">{{ member.tg }}</p>

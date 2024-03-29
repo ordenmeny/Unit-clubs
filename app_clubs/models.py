@@ -79,4 +79,13 @@ class EventModel(BaseModel):
 
 
 class Notifs(models.Model):
-    text = models.TextField(blank=True, null=True, verbose_name='Текст')
+    text = models.TextField(verbose_name='Текст', null=True)
+    sender = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, blank=False, verbose_name='Отправитель')
+    receiver = models.ManyToManyField(get_user_model(), related_name='notifs_receiver', null=True, blank=False, verbose_name='Получатель')
+    timestamp = models.DateTimeField(auto_now_add=True, null=True, verbose_name='Время')
+
+    class Meta:
+        verbose_name_plural = 'Сообщения'
+
+
+

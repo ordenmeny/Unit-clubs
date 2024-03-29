@@ -1,0 +1,25 @@
+{% extends 'app_clubs/base/base.html' %}
+
+
+{% block content %}
+    <br>
+    <div class="container">
+        <h1 class="title-weight-section">Мои сообщения</h1><br>
+
+        <div class="list-group">
+            {% for msg in notifs %}
+                <a href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <p class="mb-1">{{ msg.text }}</p>
+                        <small class="text-body-secondary">{{ msg.timestamp }}</small>
+                    </div>
+                    {#                    <p class="mb-1">Some placeholder content in a paragraph.</p>#}
+                    <small class="text-body-secondary">Отправитель: {{ msg.sender.fio }}</small>
+                </a>
+
+
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

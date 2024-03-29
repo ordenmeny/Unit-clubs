@@ -18,11 +18,9 @@ class UserForm(UserCreationForm):
                            widget=forms.Textarea(
                                attrs={'class': 'form-control block-opacity input-height', 'placeholder': 'Описание'}))
 
-    # image = forms.FileField(label='Картинка',
-    #                         widget=forms.FileInput(
-    #                             attrs={'class': 'form-control', 'placeholder': 'Картинка'}))
-
-    # image = forms.FileInput(attrs={'class': 'form-control'}),
+    image = forms.FileField(label='Картинка',
+                            widget=forms.FileInput(
+                                attrs={'class': 'form-control input-file-opacity', 'placeholder': 'Картинка'}))
     password1 = forms.CharField(label='Пароль',
                                 widget=forms.PasswordInput(attrs={'class': 'form-control block-opacity input-height',
                                                                   'placeholder': 'Пароль'}))
@@ -48,6 +46,9 @@ class CustomUserChangeForm(UserChangeForm):
     desc = forms.CharField(label='Описание',
                            widget=forms.Textarea(
                                attrs={'class': 'form-control block-opacity input-height', 'placeholder': 'Описание'}))
+    image = forms.FileField(label='Картинка',
+                            widget=forms.FileInput(
+                                attrs={'class': 'form-control input-file-opacity', 'placeholder': 'Картинка'}))
 
     class Meta:
         model = get_user_model()

@@ -49,7 +49,9 @@
             border-top-right-radius: 0;
         }
     </style>
-    <main style="height: 630px;" class="block-opacity form-signin w-100 m-auto d-flex justify-content-center position-absolute top-50 start-50 translate-middle">
+
+    <main style="height:{% if height %}{{ height }}{% else %}600px{% endif %}"
+          class="block-opacity form-signin w-100 m-auto d-flex justify-content-center position-absolute top-50 start-50 translate-middle">
         <div>
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -59,14 +61,14 @@
                 {{ form.fio }}<br>
                 {{ form.tg }}<br>
                 {{ form.desc }}<br>
+                {{ form.image }} <br>
                 {{ form.password1 }}<br>
-                {{ form.password2 }}<br>
-
+                {{ form.password2 }} <br>
                 {% if type_btn %}
 
-                <button class="btn btn-secondary w-100 py-2" type="submit">{{ type_btn }}</button>
+                    <button class="btn btn-secondary w-100 py-2" type="submit">{{ type_btn }}</button>
                 {% else %}
-                <button class="btn btn-secondary w-100 py-2" type="submit">Зарегистрироваться</button>
+                    <button class="btn btn-secondary w-100 py-2" type="submit">Зарегистрироваться</button>
 
                 {% endif %}
 

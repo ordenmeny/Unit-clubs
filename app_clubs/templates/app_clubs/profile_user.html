@@ -6,18 +6,38 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                {% if request.user.image %}
+
+                {% if request.user.image and type_profile == 'my_page' %}
+
                     <img src="{{ request.user.image.url }}" class="img-fluid rounded-start"
                          style="height: 300px; width: 100%; object-fit: cover">
 
                 {% endif %}
+
+                {% if type_profile == 'foreign_profile' and image %}
+                    <img src="{{ image.url }}" class="img-fluid rounded-start"
+                         style="height: 300px; width: 100%; object-fit: cover">
+
+                {% endif %}
+
+
             </div>
             <div class="col-md-6">
                 <div class="card-body">
-                    <h2 class="card-title">{{ request.user.fio }}</h2><br>
-{#                    <h2 class="card-title">{{ request.user.last_name }}</h2>#}
-                    <p class="card-text">{{ request.user.desc|truncatechars:200 }}</p>
-                    <a href="{% url 'users:edit_profile' pk=request.user.pk %}" class="btn btn-secondary btn-black-white">Редактировать профиль</a>
+                    {% if type_profile == 'foreign_profile' %}
+                        <h2 class="card-title">{{ fio }}</h2><br>
+                        <p class="card-text">{{ desc|truncatechars:400 }}</p>
+                        <a href="{% url 'app_clubs:send_msg' club_slug=club.slug pk=pk %}"
+                           class="btn btn-secondary btn-black-white">Отправить сообщение</a>
+                    {% endif %}
+
+                    {% if type_profile == 'my_page' %}
+                        <h2 class="card-title">{{ request.user.fio }}</h2><br>
+                        <p class="card-text">{{ request.user.desc|truncatechars:400 }}</p>
+                        <a href="{% url 'users:edit_profile' pk=request.user.pk %}"
+                           class="btn btn-secondary btn-black-white">Редактировать профиль</a>
+                    {% endif %}
+
                 </div>
             </div>
         </div>
@@ -26,106 +46,40 @@
 
 
     <br><br>
-{#    <div class="container">#}
-{#        <div class="row">#}
-{#            <div class="col-md-6">#}
-{#                <div class="card mb-3" style="max-width: 540px; border: 1px solid #FFFFFF">#}
-{#                    <div class="row g-0">#}
-{#                        <div class="col-md-6">#}
-{##}
-{#                            {% if request.user.image %}#}
-{#                                <img src="{{ request.user.image.url }}" class="img-fluid rounded-start"#}
-{#                                     style="height: 300px; width: 100%; object-fit: cover">#}
-{##}
-{#                            {% endif %}#}
-{#                        </div>#}
-{#                        <div class="col-md-6">#}
-{#                            <div class="card-body">#}
-{#                                <h2 class="card-title">{{ request.user.first_name }}</h2>#}
-{#                                <h2 class="card-title">{{ request.user.last_name }}</h2>#}
-{#                                <p class="card-text">{{ request.user.desc|truncatechars:200 }}</p>#}
-{#                                <button class="btn btn-secondary btn-black-white">Редактировать профиль</button>#}
-{#                            </div>#}
-{##}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#            <div class="col-md-2" style="border: 1px solid red">#}
-{#                <div style="width: 100%">#}
-{#                    <br>#}
-{#                    <h3>Уведомления</h3><br>#}
-{#                    <p><i class="bi bi-clock"></i>#}
-{#                        Перенос занятия клуба "Шахматы"</p>#}
-{#                    <hr>#}
-{#                    <p><i class="bi bi-clock"></i>#}
-{#                        {{ "Встреча клуба NewsMobile состоится в Главном офисе яндекс студио про"|truncatewords:5 }}</p>#}
-{#                    <hr>#}
-{#                    <p><i class="bi bi-clock"></i>#}
-{#                        {{ "Клуб NewsMobile предлагает ..."|truncatewords:5 }}</p>#}
-{#                    <hr>#}
-{#                    <p>Еще...</p>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-
-
 
     <br><br>
-    {#    <main class="container">#}
-    {#        <h1>Ваши клубы</h1>#}
-    {#        <div class="row row-cols-1 row-cols-md-2 g-4">#}
-    {#            {% for club in my_clubs %}#}
-    {##}
-    {#                <div class="col">#}
-    {#                    <div class="card">#}
-    {#                        <div class="row g-0">#}
-    {#                            <div class="col-md-4">#}
-    {#                                <img src="{% static 'app_clubs/images/club_avatar.png' %}"#}
-    {#                                     class="img-fluid rounded-start"#}
-    {#                                     style="width:100%;height: 200px">#}
-    {#                            </div>#}
-    {#                            <div class="col-md-8">#}
-    {#                                <div class="card-body">#}
-    {#                                    <a href="#"><h5 class="card-title">{{ club.title }}</h5></a>#}
-    {#                                </div>#}
-    {#                            </div>#}
-    {#                        </div>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#            {% endfor %}#}
-    {#        </div>#}
-    {#    </main>#}
+
+
+    {% if not fio %}
 
 
 
-    <div class="container">
-        <h1 class="title-weight-section">Мои клубы</h1><br>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            {% for club in my_clubs %}
+        <div class="container">
+            <h1 class="title-weight-section">Мои клубы</h1><br>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                {% for club in my_clubs %}
 
-                <div class="col">
-                    <div class="card h-100">
-                        {% if club.image %}
-                            <div style="overflow: hidden; height: 200px;">
-                                <img style="object-fit: cover; height: 100%; width: 100%;"
-                                     src="{{ club.image.url }}" class="card-img-top">
+                    <div class="col">
+                        <div class="card h-100">
+                            {% if club.image %}
+                                <div style="overflow: hidden; height: 200px;">
+                                    <img style="object-fit: cover; height: 100%; width: 100%;"
+                                         src="{{ club.image.url }}" class="card-img-top">
 
+                                </div>
+
+                            {% endif %}
+                            <div class="card-body">
+                                <p class="card-title" style="font-size: 30px; font-weight: 600">{{ club.title }}</p>
+                                <a href="{% url 'app_clubs:profile_club' club.slug %}"
+                                   class="btn join-btn">Перейти <i class="bi bi-arrow-right"></i></a>
                             </div>
-
-                        {% endif %}
-                        <div class="card-body">
-                            <p class="card-title" style="font-size: 30px; font-weight: 600">{{ club.title }}</p>
-                            <a href="{% url 'app_clubs:profile_club' club.slug %}"
-                               class="btn join-btn">Перейти <i class="bi bi-arrow-right"></i></a>
                         </div>
                     </div>
-                </div>
 
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
-    </div>
-
+    {% endif %}
     <br><br><br><br><br>
 {% endblock %}

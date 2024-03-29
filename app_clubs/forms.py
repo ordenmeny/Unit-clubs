@@ -36,3 +36,11 @@ class FormEvent(ModelForm):
             'description': forms.TextInput(attrs={'class': 'form-control'}),
             'format': forms.Select(attrs={'class': 'form-select form-select-lg mb-3'}),
         }
+
+
+class FormNotifs(ModelForm):
+    text = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = Notifs
+        fields = ['text']

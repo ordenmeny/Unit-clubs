@@ -18,9 +18,13 @@ class LoginUser(LoginView):
 
 
 class SignUp(CreateView):
+    # После авторизации перенапрявлять на страницу профиль пользователя для
+
     form_class = UserForm
     template_name = 'users/signup.html'
     item_selected = 'signup'
+
+    extra_context = {'height': '100%'}
 
     def get_success_url(self):
         return reverse_lazy('users:login')
@@ -30,9 +34,8 @@ class UpdateProfile(LoginRequiredMixin, UpdateView):
     model = get_user_model()
     form_class = CustomUserChangeForm
     template_name = 'users/signup.html'
-    extra_context = {'type_btn': 'Сохранить'}
+    extra_context = {'type_btn': 'Сохранить', 'height': '600px'}
 
     def get_success_url(self):
         messages.success(self.request, 'Профиль изменен')
         return reverse_lazy('app_clubs:profile_user')
-

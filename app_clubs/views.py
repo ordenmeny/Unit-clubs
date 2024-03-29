@@ -19,8 +19,46 @@ class ProfileUser(LoginRequiredMixin, DataMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['my_clubs'] = self.request.user.clubs.all()
+        context['type_profile'] = 'my_page'
 
         return context
+
+
+class ProfileUserClub(RequiredClubMember, TemplateView):
+    template_name = 'app_clubs/profile_user.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        fio = get_user_model().objects.get(pk=self.kwargs['pk']).fio
+        desc = get_user_model().objects.get(pk=self.kwargs['pk']).desc
+        image = get_user_model().objects.get(pk=self.kwargs['pk']).image
+
+        context['fio'] = fio
+        context['desc'] = desc
+        context['image'] = image
+        context['club'] = self.request.current_club
+        context['type_profile'] = 'foreign_profile'
+        context['pk'] = self.kwargs['pk']
+
+        return context
+
+
+class SendMsg(RequiredClubMember, CreateView):
+    template_name = 'app_clubs/send_msg.html'
+    model = Notifs
+    form_class = FormNotifs
+
+    def get_success_url(self):
+        messages.success(self.request, 'Сообщение отправлено')
+        return reverse_lazy('app_clubs:profile_club', kwargs={'club_slug': self.kwargs['club_slug']})
+
+    def form_valid(self, form):
+        form.instance.sender = self.request.user
+        receiver = get_user_model().objects.get(pk=self.kwargs['pk'])
+        self.object = form.save()
+        self.object.receiver.add(receiver)
+
+        return super().form_valid(form)
 
 
 class ProfileClub(RequiredClubMember, TemplateView):
@@ -254,3 +292,13 @@ class UpdateClubProfile(RequiredClubMember, UpdateView):
     def get_success_url(self):
         messages.success(self.request, 'Профиль клуба изменен')
         return reverse_lazy('app_clubs:profile_club', kwargs={'club_slug': self.kwargs['club_slug']})
+
+
+
+class MyNotifs(RequiredClubMember, ListView):
+    template_name = 'app_clubs/my_msg.html'
+    context_object_name = 'notifs'
+    model = Notifs
+
+    def get_queryset(self):
+        return Notifs.objects.filter(receiver=self.request.user)
