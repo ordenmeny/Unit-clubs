@@ -17,6 +17,10 @@
             border: 1px solid white;
         }
 
+        a{
+            text-decoration:none;
+        }
+
 
     </style>
 
@@ -24,7 +28,7 @@
         <h1 class="" style="font-size: 54px; font-weight: bold">{{ current_club }}</h1>
 
         {% if current_club.short_desc %}
-            <p style="font-size: 20px">{{ current_club.short_desc }}</p>
+            <p style="font-size: 20px">{{ current_club.short_desc|safe }}</p>
 
         {% endif %}
         <h5>{{ current_club.tg }}</h5>

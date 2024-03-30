@@ -45,7 +45,8 @@ class Club(BaseModel):
     not_approved = models.ManyToManyField(get_user_model(), related_name='notapproved', null=True, blank=True)
 
     description = models.TextField(blank=True, null=True, verbose_name='Информация о клубе')
-    short_desc = models.TextField(blank=True, null=True, verbose_name='Доп.информация о клубе')
+    # short_desc = models.TextField(blank=True, null=True, verbose_name='Доп.информация о клубе')
+    short_desc = CKEditor5Field(blank=True, null=True, verbose_name="Доп.информация о клубе", config_name='extends')
     moderate = models.BooleanField(default=False, verbose_name='Модерировать')
 
     image = models.FileField(upload_to='uploads/%Y/%m/%d/', default=None, null=True, blank=True,
