@@ -22,6 +22,11 @@
 
     <div class="container"><br>
         <h1 class="" style="font-size: 54px; font-weight: bold">{{ current_club }}</h1>
+
+        {% if current_club.short_desc %}
+            <p style="font-size: 20px">{{ current_club.short_desc }}</p>
+
+        {% endif %}
         <h5>{{ current_club.tg }}</h5>
     </div>
     <hr>
@@ -37,8 +42,8 @@
             <a class="btn btn-outline-secondary"
                href="{% url 'app_clubs:edit_club_profile' club_slug=current_club.slug %}">Редактировать профиль</a>
 
-            <a class="btn btn-outline-secondary"
-               href="{% url 'app_clubs:edit_club_profile' club_slug=current_club.slug %}">Сделать рассылку</a>
+            {#            <a class="btn btn-outline-secondary"#}
+            {#               href="{% url 'app_clubs:edit_club_profile' club_slug=current_club.slug %}">Сделать рассылку</a>#}
         </div><br>
     {% endif %}
     <div class="container">
@@ -49,7 +54,7 @@
     <br>
     {% include 'app_clubs/base/base_show_events.html' with param='3:3' %}
 
-    <br><br><br>
+    <br>
     {% include 'app_clubs/base/base_show_posts.html' with param='3:6' %}
 
     <br><br><br>

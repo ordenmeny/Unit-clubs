@@ -1,25 +1,33 @@
 {% load static %}
 {% load club_filters %}
 
+{% if events %}
 <div class="container">
     <h2 class="title-weight-section">События</h2><br>
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for part in events|list_content:param %}
 
-            <div class="col">
-                <div class="card h-100" style="background-color: #e8e8e8;">
+                        <div class="col">
+                            <div class="card h-100" style="background-color: rgba(232,232,232,0.46);">
 
-                    <div class="card-body">
-                        <a href="#" class="card-title text-decoration-none"
-                           style="color: black; font-weight: 700">
-                            {{ part.title }}</a><br><br>
-                        <a class="card-text text-decoration-none" href="#"
-                           style="color: black; font-weight: 500">
-                            {{ part.description|truncatechars:200|safe }}</a>
+                                <div class="card-body">
+                                    <a href="#" class="card-title text-decoration-none"
+                                       style="color: black; font-weight: 700">
+                                        {{ part.title }}</a><br><br>
+                                    <a class="card-text text-decoration-none" href="#"
+                                       style="color: black; font-weight: 500">
+                                        {{ part.description|truncatechars:150|safe }}</a>
 
-                    </div>
-                </div>
-            </div>
+                                </div>
+                            </div>
+                        </div>
+{#            <div class="card border-dark mb-3" style="max-width: 18rem;">#}
+{#                <div class="card-header bg-transparent">{{ part.title }}</div>#}
+{#                <div class="card-body">#}
+{#                    <h5 class="card-title">Dark card title</h5>#}
+{#                    <p class="card-text">{{ part.description|truncatechars:200|safe }}</p>#}
+{#                </div>#}
+{#            </div>#}
 
         {% endfor %}
 
@@ -29,3 +37,5 @@
        class="more">Еще...</a>
 
 </div>
+    <br><br>
+{% endif %}

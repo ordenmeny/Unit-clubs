@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     # Rich text-editor
     'ckeditor',
+
 ]
 
 MIDDLEWARE = [
@@ -111,7 +112,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # LANGUAGE_CODE = 'en-us'
 LANGUAGE_CODE = 'ru-RU'
 
-
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -138,3 +138,12 @@ LOGOUT_REDIRECT_URL = 'app_clubs:home_page'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# CKEDITOR_CONFIGS = {
+#     'default': {
+#         'toolbar': 'full',
+#         # 'height': '100%',
+#         # 'width': '100%',
+#         'size': '40px'
+#     },
+# }

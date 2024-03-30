@@ -32,8 +32,8 @@
             <div class="col-sm-12 col-md-6">
                 <h2>{{ club.title }}</h2><br>
                 <p style="font-size: 25px"><i class="bi bi-wallet2"></i> Бесплатно</p>
-                <p style="font-size: 25px"><i class="bi bi-person-exclamation"></i> Возрастные ограничения</p>
-                <p style="font-size: 25px"><i class="bi bi-geo-alt"></i> 8 марта, 23</p>
+                <p style="font-size: 25px"><i class="bi bi-telegram"></i> {{ club.tg }}</p>
+{#                <p style="font-size: 25px"><i class="bi bi-geo-alt"></i> 8 марта, 23</p>#}
             </div>
         </div>
     </div>
@@ -42,7 +42,7 @@
         <h2 class="title-weight-section">Описание</h2><br>
         <div class="row">
             <div class="col-sm-12 col-md-10">
-                <p style="font-size: 25px">{{ club.description|truncatechars:1000 }}</p>
+                <p style="font-size: 25px">{{ club.description }}</p>
 
                     <form method="post">{% csrf_token %}
                         {{ form.as_p }}
@@ -55,6 +55,4 @@
 
 
     <br><br>
-
-    <br><br><br><br><br>
 {% endblock %}

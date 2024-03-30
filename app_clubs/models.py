@@ -28,6 +28,7 @@ class BaseModel(models.Model):
     slug = models.SlugField(max_length=128, db_index=True, null=False, blank=True, unique=True)
     club = models.ForeignKey("Club", on_delete=models.SET_NULL, null=True, blank=True)
 
+
     def __str__(self):
         return self.title
 
@@ -41,6 +42,7 @@ class Club(BaseModel):
     not_approved = models.ManyToManyField(get_user_model(), related_name='notapproved', null=True, blank=True)
 
     description = models.TextField(blank=True, null=True, verbose_name='Информация о клубе')
+    short_desc = models.TextField(blank=True, null=True, verbose_name='Доп.информация о клубе')
     moderate = models.BooleanField(default=False, verbose_name='Модерировать')
 
     image = models.FileField(upload_to='uploads/%Y/%m/%d/', default=None, null=True, blank=True,
