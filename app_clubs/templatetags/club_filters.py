@@ -11,3 +11,11 @@ def list_content(lst, param):
     if len(lst) < by:
         return lst
     return lst[0:len(lst) // by * by][:size]
+
+
+@register.filter
+def tg_club(href):
+    if 'https://t.me/' in href:
+        href = href.replace('https://t.me/', '@')
+
+    return href

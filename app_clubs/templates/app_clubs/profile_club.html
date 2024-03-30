@@ -4,7 +4,8 @@
 {% load club_filters %}
 {% block content %}
 
-    <style>
+
+<style>
         .img-post-list {
             height: 300px;
             background-size: cover;
@@ -22,48 +23,84 @@
         }
 
 
-    </style>
 
-    <div class="container"><br>
-        <h1 class="" style="font-size: 54px; font-weight: bold">{{ current_club }}</h1>
 
-        {% if current_club.short_desc %}
-            <p style="font-size: 20px">{{ current_club.short_desc|safe }}</p>
+</style>
 
-        {% endif %}
-        <h5>{{ current_club.tg }}</h5>
-    </div>
-    <hr>
-    {% if request.user in current_club.admins.all %}
-        <br>
-        <div class="container">
-            <a class="btn btn-outline-secondary" href="{% url 'app_clubs:create_post' club_slug=current_club.slug %}">Создать
-                пост</a>
-            <a class="btn btn-outline-secondary" href="{% url 'app_clubs:create_event' club_slug=current_club.slug %}">Создать
-                событие</a>
-            <a class="btn btn-outline-secondary"
-               href="{% url 'app_clubs:approve_members' club_slug=current_club.slug %}">Подтвердить участников</a>
-            <a class="btn btn-outline-secondary"
-               href="{% url 'app_clubs:edit_club_profile' club_slug=current_club.slug %}">Редактировать профиль</a>
+<div class="container"><br>
+    <h1 class="" style="font-size: 54px; font-weight: bold">{{ current_club }}</h1>
 
-            {#            <a class="btn btn-outline-secondary"#}
-            {#               href="{% url 'app_clubs:edit_club_profile' club_slug=current_club.slug %}">Сделать рассылку</a>#}
-        </div><br>
+    {% if current_club.short_desc %}
+    <p style="font-size: 20px">{{ current_club.short_desc|safe }}</p>
     {% endif %}
-    <div class="container">
-        <a class="btn btn-outline-secondary" href="{% url 'app_clubs:my_notifs' club_slug=current_club.slug %}">Мои
-            сообщения</a>
-    </div>
 
-    <br>
-    {% include 'app_clubs/base/base_show_events.html' with param='3:3' %}
+    <h5><a href="{{ current_club.tg }}" style="color: black;" target="_blank">{{current_club.tg|tg_club }}</a></h5>
+</div>
+<hr>
+{% if request.user in current_club.admins.all %}
+<br>
+<div class="container">
+    <a class="btn btn-outline-secondary" href="{% url 'app_clubs:create_post' club_slug=current_club.slug %}">Создать
+        пост</a>
+    <a class="btn btn-outline-secondary" href="{% url 'app_clubs:create_event' club_slug=current_club.slug %}">Создать
+        событие</a>
+    <a class="btn btn-outline-secondary"
+       href="{% url 'app_clubs:approve_members' club_slug=current_club.slug %}">Подтвердить участников</a>
+    <a class="btn btn-outline-secondary"
+       href="{% url 'app_clubs:edit_club_profile' club_slug=current_club.slug %}">Редактировать профиль</a>
 
-    <br>
-    {% include 'app_clubs/base/base_show_posts.html' with param='3:6' %}
+    {# <a class="btn btn-outline-secondary" #}
+          {# href="{% url 'app_clubs:edit_club_profile' club_slug=current_club.slug %}">Сделать рассылку</a>#}
+</div><br>
+{% endif %}
+<div class="container">
+    <a class="btn btn-outline-secondary" href="{% url 'app_clubs:my_notifs' club_slug=current_club.slug %}">Мои
+        сообщения</a>
+</div>
+<br>
 
-    <br><br><br>
-    {% include 'app_clubs/base/base_show_members.html' with param="4:4" %}
+<div class="container">
+    <section class="py-5" style="background-image: url({% static 'app_clubs/images/img-fon.png' %});">
+        <div class="container" data-cues="zoomIn" data-disabled="true">
+            <div class="row bg-pattern bg-primary-gradient rounded-3 p-7 g-0" data-cue="zoomIn" data-show="true"
+                 style="animation-name: zoomIn; animation-duration: 600ms; animation-timing-function: ease; animation-delay: 0ms; animation-direction: normal; animation-fill-mode: both;">
+                <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-12 col-12">
+                    <div class="position-relative z-1 my-lg-5">
+                        <div class="mb-5 text-center">
+                            <h3 class="h2 text-white-stable mb-1">Try our powerful work management tools</h3>
+                            <p class="mb-0 text-white-stable">Sign up for a free two-week trial of Block today — no
+                                credit
+                                card required.</p>
+                        </div>
+                        <form class="row g-2 needs-validation d-flex mx-lg-7" novalidate="">
+                            <div class="col-md-7 col-xl-7 col-12">
+                                <label for="notificationEmail" class="visually-hidden"></label>
+                                <input type="email" id="notificationEmail" class="form-control"
+                                       placeholder="Enter your business email" aria-label="Enter your business email"
+                                       required="">
+                                <div class="invalid-feedback text-start">Please choose a email.</div>
+                            </div>
+                            <div class="col-md-5 col-xl-5 col-12">
+                                <div class="d-grid">
+                                    <button class="btn btn-dark" type="submit">Get notified for free</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<br>
+{% include 'app_clubs/base/base_show_events.html' with param='3:3' %}
 
-    <br><br><br>
+<br>
+{% include 'app_clubs/base/base_show_posts.html' with param='3:6' %}
+
+<br><br><br>
+{% include 'app_clubs/base/base_show_members.html' with param="4:4" %}
+
+<br><br><br>
 
 {% endblock %}
