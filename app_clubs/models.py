@@ -3,6 +3,9 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.conf import settings
 from ckeditor.fields import RichTextField
+from django_ckeditor_5.fields import CKEditor5Field
+
+
 
 cats = [
     ("sport", "СПОРТ"),
@@ -60,7 +63,7 @@ class ModelPost(BaseModel):
         ('article', 'Статьи'),
     ]
 
-    text = RichTextField(blank=True, null=True, verbose_name="Текст")
+    text = CKEditor5Field(blank=True, null=True, verbose_name="Текст", config_name='extends')
     image = models.FileField(upload_to='uploads/posts/', default=None, null=True, blank=True,
                              verbose_name='Изображение')
     datetime = models.DateField(blank=True, null=True, default=datetime.date.today)

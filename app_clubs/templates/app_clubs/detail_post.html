@@ -1,11 +1,21 @@
 {% extends 'app_clubs/base/base.html' %}
 
 {% block content %}
-    <div class="container">
+
+    <style>
+        img {
+            width: 100%;
+            height: 100%;
+        }
+        p{
+            font-size: 30px;
+        }
+    </style>
+    <div class="container ck-content">
 
     <br>
         <h1>{{ post.title }}</h1>
-        <p style="font-size: 40px !important;">{{ post.text|safe }}</p>
+        <p>{{ post.text|safe }}
     {% if request.user in club.admins.all %}
         <a href="{% url 'app_clubs:delete_post' post_slug=post.slug club_slug=post.club.slug %}" class="btn btn-danger">Удалить</a>
         <a href="{% url 'app_clubs:edit_post' post_slug=post.slug club_slug=post.club.slug %}" class="btn btn-secondary">Изменить</a>
