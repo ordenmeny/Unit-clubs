@@ -237,4 +237,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'  # Добавляем префикс media
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # каталог, где будут размещаться файлы
-#
+# new commit
