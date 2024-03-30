@@ -1,0 +1,44 @@
+.block-opacity {
+    background-color: rgba(170, 161, 161, 0.74) !important;
+}
+
+.input-height{
+    height: 40px;
+    width: 430px;
+}
+
+.input-height::placeholder{
+    color: white;
+}
+
+.btn-secondary{
+    border: 1px solid #FFFFFF;
+    background: #FFFFFF !important;
+    color: #101820;
+}
+.btn-secondary:hover{
+    border: 1px solid #FFFFFF;
+    background: #FFFFFF !important;
+    color: #101820;
+}
+
+.btn-outline-secondary{
+    color: #FFFFFF;
+    border: 1px solid white;
+    transition: 0.6s;
+}
+
+.btn-outline-secondary:hover{
+    color: #101820;
+    background-color: white;
+    border: 1px solid white;
+
+}
+.main-block-login{
+    /*display: block;*/
+}
+
+
+.input-file-opacity{
+    background-color: rgba(170, 161, 161, 0.74) !important;
+}

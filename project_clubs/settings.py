@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-_$@5o+p_l^cs$e-#crd+p9l)v4086x@duc2zs$du_!fk9mvq(4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['ordenmeny-unit-clubs-92cf.twc1.net']
+ALLOWED_HOSTS = ['ordenmeny-unit-clubs-92cf.twc1.net', '127.0.0.1']
 
 # Application definition
 
@@ -122,6 +122,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+STATIC_ROOT = BASE_DIR / 'static'
 STATIC_URL = 'static/'
 
 MEDIA_ROOT = BASE_DIR / 'media'  # каталог, где будут размещаться файлы
