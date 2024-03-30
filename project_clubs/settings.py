@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-_$@5o+p_l^cs$e-#crd+p9l)v4086x@duc2zs$du_!fk9mvq(4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['ordenmeny-unit-clubs-92cf.twc1.net', '127.0.0.1', '85.193.86.134']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -123,8 +123,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 
-MEDIA_ROOT = BASE_DIR / 'media'  # каталог, где будут размещаться файлы
-MEDIA_URL = 'media/'  # Добавляем префикс media
+# MEDIA_ROOT = BASE_DIR / 'media'  # каталог, где будут размещаться файлы
+# MEDIA_URL = 'media/'  # Добавляем префикс media
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -227,11 +227,14 @@ CKEDITOR_5_CONFIGS = {
     }
 }
 
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+# STATIC_URL = '/static/'
+#
+
+
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-# STATIC_ROOT = BASE_DIR / 'static'
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static')
-# ]
-# STATICFILES_STORAGE = "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",  # new
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+MEDIA_URL = '/media/'  # Добавляем префикс media
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # каталог, где будут размещаться файлы
+#
