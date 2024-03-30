@@ -2,10 +2,10 @@
 
 <!DOCTYPE html>
 <html lang="en">
-{% include 'app_clubs/base/header_links.html' %}
+
 <body>
 <head>
-{% include 'app_clubs/base/navbar.html' %}
+    {% include 'app_clubs/base/header_links.html' %}
 </head>
 <style>
     .asteriskField {
@@ -21,7 +21,7 @@
         font-family: 'NT_Sakharov', sans-serif;
     }
 </style>
-
+{% include 'app_clubs/base/navbar.html' %}
 {% include 'app_clubs/base/flash_msg.html' %}
 
 {% block content %}

@@ -43,10 +43,12 @@ class ProfileUserClub(RequiredClubMember, TemplateView):
         return context
 
 
-class SendMsg(RequiredClubMember, CreateView):
+class SendMsg(RequiredClubMember, DataMixin, CreateView):
     template_name = 'app_clubs/send_msg.html'
     model = Notifs
     form_class = FormNotifs
+    item_selected = 'my_msg'
+
 
     def get_success_url(self):
         messages.success(self.request, 'Сообщение отправлено')
@@ -295,10 +297,12 @@ class UpdateClubProfile(RequiredClubMember, UpdateView):
         return reverse_lazy('app_clubs:profile_club', kwargs={'club_slug': self.kwargs['club_slug']})
 
 
-class MyNotifs(RequiredClubMember, ListView):
+class MyNotifs(LoginRequiredMixin, DataMixin, ListView):
     template_name = 'app_clubs/my_msg.html'
     context_object_name = 'notifs'
     model = Notifs
+    item_selected = 'my_msg'
+
 
     def get_queryset(self):
         return Notifs.objects.filter(receiver=self.request.user)

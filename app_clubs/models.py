@@ -41,6 +41,7 @@ class BaseModel(models.Model):
 
 class Club(BaseModel):
     club = None
+    title = models.CharField(max_length=128, verbose_name='Название')
     admins = models.ManyToManyField(get_user_model(), related_name='clubsadmins')
     not_approved = models.ManyToManyField(get_user_model(), related_name='notapproved', null=True, blank=True)
 
