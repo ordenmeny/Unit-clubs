@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-_$@5o+p_l^cs$e-#crd+p9l)v4086x@duc2zs$du_!fk9mvq(4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -229,15 +229,13 @@ CKEDITOR_5_CONFIGS = {
     }
 }
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-# STATIC_URL = '/static/'
-#
-
-
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-MEDIA_URL = '/media/'  # Добавляем префикс media
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # каталог, где будут размещаться файлы
-# new commit
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# STATIC_URL = '/static/'
+# STATIC_ROOT = '/var/work/static'
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
