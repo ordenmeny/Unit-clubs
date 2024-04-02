@@ -11,16 +11,16 @@ class UserForm(UserCreationForm):
     fio = forms.CharField(label='ФИО',
                           widget=forms.TextInput(
                               attrs={'class': 'form-control block-opacity input-height', 'placeholder': 'ФИО'}))
-    tg = forms.CharField(label='Телеграм',
+    tg = forms.CharField(required=False, label='Телеграм',
                          widget=forms.TextInput(
                              attrs={'class': 'form-control block-opacity input-height', 'placeholder': 'Телеграм'}))
-    desc = forms.CharField(label='Описание',
+    desc = forms.CharField(required=False, label='Описание',
                            widget=forms.Textarea(
                                attrs={'class': 'form-control block-opacity input-height', 'placeholder': 'Описание'}))
 
-    image = forms.FileField(label='Картинка',
-                            widget=forms.FileInput(
-                                attrs={'class': 'form-control input-file-opacity', 'placeholder': 'Картинка'}))
+    # image = forms.FileField(label='Картинка',
+    #                         widget=forms.FileInput(
+    #                             attrs={'class': 'form-control input-file-opacity', 'placeholder': 'Картинка'}))
     password1 = forms.CharField(label='Пароль',
                                 widget=forms.PasswordInput(attrs={'class': 'form-control block-opacity input-height',
                                                                   'placeholder': 'Пароль'}))
@@ -30,7 +30,7 @@ class UserForm(UserCreationForm):
 
     class Meta:
         model = get_user_model()
-        fields = ['username', 'fio', 'tg', 'desc', 'password1', 'password2', 'image']
+        fields = ['username', 'fio', 'tg', 'desc', 'password1', 'password2']
 
 
 class CustomUserChangeForm(UserChangeForm):

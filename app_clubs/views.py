@@ -314,7 +314,7 @@ class DeleteNotifs(RequiredClubMember, DeleteView):
 
     def get_success_url(self):
         messages.success(self.request, 'Сообщение удалено')
-        return reverse_lazy('app_clubs:my_notifs', kwargs={'club_slug': self.kwargs['club_slug']})
+        return reverse_lazy('app_clubs:my_notifs')
 
     def dispatch(self, request, *args, **kwargs):
         # проверяем, адресовано ли это сообщение текущему пользователю
