@@ -1,11 +1,13 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
 from .forms import *
 from django.contrib import messages
+from django.contrib.auth import login as auth_login
 
 
 class LoginUser(LoginView):
@@ -28,6 +30,10 @@ class SignUp(CreateView):
 
     def get_success_url(self):
         return reverse_lazy('users:login')
+
+    def form_valid(self, form):
+        auth_login(self.request, form.save())
+        return HttpResponseRedirect(reverse_lazy('app_clubs:profile_user'))
 
 
 class UpdateProfile(LoginRequiredMixin, UpdateView):
