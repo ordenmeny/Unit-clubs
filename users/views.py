@@ -46,4 +46,3 @@ class UpdateProfile(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         messages.success(self.request, 'Профиль изменен')
         return reverse_lazy('app_clubs:profile_user')
-#
