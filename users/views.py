@@ -33,6 +33,7 @@ class SignUp(CreateView):
 
     def form_valid(self, form):
         auth_login(self.request, form.save())
+        messages.success(self.request, 'Вы зарегистрировались')
         return HttpResponseRedirect(reverse_lazy('app_clubs:profile_user'))
 
 
