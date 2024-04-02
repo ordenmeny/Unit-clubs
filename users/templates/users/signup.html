@@ -61,7 +61,12 @@
                 {{ form.fio }}<br>
                 {{ form.tg }}<br>
                 {{ form.desc }}<br>
+
+            {% if form.image %}
+{#                <p>Выбрать аватарку</p>#}
                 {{ form.image }} <br>
+            {% endif %}
+
                 {{ form.password1 }}<br>
                 {{ form.password2 }} <br>
                 {% if type_btn %}
