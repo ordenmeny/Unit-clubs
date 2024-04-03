@@ -326,3 +326,12 @@ class DeleteNotifs(RequiredClubMember, DeleteView):
             return redirect(reverse_lazy('app_clubs:page_error', kwargs={'type_error': '403'}))
 
         return super().dispatch(request, *args, **kwargs)
+
+
+
+class DetailEvent(RequiredClubMember, DetailView):
+    model = EventModel
+    context_object_name = 'event'
+    slug_url_kwarg = ''
+    template_name = 'app_clubs/detail_event.html'
+

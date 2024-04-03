@@ -2,3 +2,6 @@ __pycache__
 .venv
 .idea
 media
+*.pyc
+**/migrations/
+db.sqlite3

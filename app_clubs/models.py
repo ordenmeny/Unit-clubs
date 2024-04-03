@@ -78,8 +78,10 @@ class ModelPost(BaseModel):
 
 
 class EventModel(BaseModel):
+    slug = None
     description = RichTextField(blank=True, null=True, verbose_name="Описание события")
     format = models.CharField(max_length=16, choices=BaseModel.format_choices, verbose_name="Формат проведения")
+
 
     class Meta:
         verbose_name_plural = 'События'

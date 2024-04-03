@@ -11,10 +11,11 @@
                             <div class="card h-100" style="background-color: rgba(232,232,232,0.46);">
 
                                 <div class="card-body">
-                                    <a href="#" class="card-title text-decoration-none"
+{#                                    <p>{{ current_club }}</p>#}
+                                    <a href="{% url 'app_clubs:detail_event' club_slug=current_club.slug pk=part.pk %}" class="card-title text-decoration-none"
                                        style="color: black; font-weight: 700">
                                         {{ part.title }}</a><br><br>
-                                    <a class="card-text text-decoration-none" href="#"
+                                    <a class="card-text text-decoration-none" href="{% url 'app_clubs:detail_event' club_slug=current_club.slug pk=part.pk %}"
                                        style="color: black; font-weight: 500">
                                         {{ part.description|truncatechars:150|safe }}</a>
 

@@ -1,0 +1,16 @@
+{% extends 'app_clubs/base/base.html' %}
+
+
+{% block content %}
+    <br>
+<div class="container">
+    <div class="card">
+        <h5 class="card-header">{{ event.title }}</h5>
+        <div class="card-body">
+            <p class="card-title" style="font-size: 20px">{{ event.description|safe }}</p>
+            <p class="card-text">{{ event.format }}</p>
+{#            <a href="#" class="btn btn-primary">Go somewhere</a>#}
+        </div>
+    </div>
+</div>
+{% endblock %}

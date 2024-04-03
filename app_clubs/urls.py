@@ -25,4 +25,6 @@ urlpatterns = [
     path('<slug:club_slug>/send-msg/<int:pk>/', views.SendMsg.as_view(), name='send_msg'),
     path('my-notifs/', views.MyNotifs.as_view(), name='my_notifs'),
     path('<slug:club_slug>/delete-notifs/<int:pk>', views.DeleteNotifs.as_view(), name='delete_notifs'),
+
+    path('<slug:club_slug>/detail-event/<int:pk>/', views.DetailEvent.as_view(), name='detail_event'),
 ]
