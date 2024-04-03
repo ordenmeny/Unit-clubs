@@ -158,7 +158,6 @@ class ApproveMembers(RequiredClubMember, FormView, ListView):
     form_class = FormJoinClub
     template_name = 'app_clubs/not_approve_members.html'
     context_object_name = 'not_approved_members'
-    success_url = reverse_lazy('app_clubs:home_page')
     for_admin = True
 
     def form_valid(self, form):
@@ -182,6 +181,11 @@ class ApproveMembers(RequiredClubMember, FormView, ListView):
         current_club = Club.objects.get(slug=self.kwargs['club_slug'])
         context['current_club'] = current_club.slug
         return context
+
+    def get_success_url(self):
+        messages.success(self.request, 'Вы добавили пользователя к клуб')
+        return reverse_lazy('app_clubs:approve_members', kwargs={'club_slug': self.kwargs['club_slug']})
+
 
 
 class CreateEvent(RequiredClubMember, DataMixin, CreateView):

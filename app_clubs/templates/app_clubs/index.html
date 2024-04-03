@@ -5,81 +5,49 @@
 
     {% show_main_img '596' %}
     <div class="container-fluid" style="border-bottom: 1px solid #101820">
-        <div class="row">
-            <div class="col-lg-6" style="border-right: 1px solid #101820;">
+
+
+        <div class="row block-lg">
+            <div class="col-xs-12 col-lg-6" style="border-right: 1px solid #101820;">
                 <br><br><br>
                 <div class="ms-5">
-                    <a href="{% url 'app_clubs:list_clubs' cat='all' %}" class="text-section-2">Хочу изучить <br>существующие клубы</a>
+                    <a href="{% url 'app_clubs:list_clubs' cat='all' %}" class="text-section-2">Хочу изучить <br>существующие
+                        клубы</a>
                 </div>
                 <br>
                 <br>
                 <br>
+
+
             </div>
-            <div class="col-lg-6">
+            <div class="col-xs-12 col-lg-6">
                 <br><br><br>
                 <div class="ms-5">
                     <a href="{% url 'app_clubs:create_club' %}" class="text-section-2">Хочу создать <br>свой клуб</a>
                 </div>
             </div>
         </div>
+
+        <div class="block-small">
+            <br><br>
+            <a href="{% url 'app_clubs:list_clubs' cat='all' %}" class="block-small-text">
+                Хочу изучить существующие клубы</a><br><br>
+            <hr>
+            <hr>
+            <br>
+            <a href="{% url 'app_clubs:create_club' %}" class="block-small-text">Хочу создать свой клуб</a>
+            <br><br>
+        </div>
     </div>
 
     <br>
     <hr style="border-top:2px solid #101820">
 
+    <br><br>
 
+    <p class="ms-5 title-section block-lg">Направления:</p>
+    <p class="text-center block-small-text-2 block-small">Направления:</p>
 
-    <p class="ms-5 title-section">Направления:</p>
-
-    {#    <div class="container-fluid">#}
-    {#        <div class="row ms-4 me-4">#}
-    {#            <div class="col-lg-3">#}
-    {#                <div class="naprav-block">#}
-    {#                    <p class="">СПОРТ</p>#}
-    {#                </div>#}
-    {#                <br>#}
-    {#                <div class="naprav-block">#}
-    {#                    <p class="">IT</p>#}
-    {#                </div>#}
-    {#                <br>#}
-    {#                <div class="naprav-block">#}
-    {#                    <p class="">КИБЕРСПОРТ</p>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#            <div class="col-lg-3">#}
-    {#                <div class="naprav-block">#}
-    {#                    <p class="">ЛИТЕРАТУРА</p>#}
-    {#                </div>#}
-    {#                <br>#}
-    {#                <div class="naprav-block">#}
-    {#                    <p class="">КУЛЬТУРА</p>#}
-    {#                </div>#}
-    {#                <br>#}
-    {#                <div class="naprav-block">#}
-    {#                    <p class="">ОБЩЕНИЕ</p>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#            <div class="col-lg-3">#}
-    {#                <div class="naprav-block">#}
-    {#                    <p class="">РИСОВАНИЕ</p>#}
-    {#                </div>#}
-    {#                <br>#}
-    {#                <div class="naprav-block">#}
-    {#                    <p class="">МУЗЫКА</p>#}
-    {#                </div>#}
-    {#                <br>#}
-    {#                <div class="naprav-block">#}
-    {#                    <p class="">РУКОДЕЛИЕ</p>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#            <div class="col-lg-3">#}
-    {#                <div class="naprav-block" style="height: 100%">#}
-    {#                    <p class="flipped-text">Другое</p>#}
-    {#                </div>#}
-    {#                <br>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#    </div>#}
     <div class="container-fluid">
         <div class="row ms-4 me-4">
             <div class="col-lg-3">
@@ -92,7 +60,8 @@
             <div class="col-lg-3">
                 {% for cat in cats|slice:"3:6" %}
                     <div class="naprav-block">
-                        <a style="color: black" href="{% url 'app_clubs:list_clubs' cat=cat.0 %}" class="">{{ cat.1 }}</a>
+                        <a style="color: black" href="{% url 'app_clubs:list_clubs' cat=cat.0 %}"
+                           class="">{{ cat.1 }}</a>
                     </div><br>
                 {% endfor %}
             </div>
@@ -103,12 +72,22 @@
                     </div><br>
                 {% endfor %}
             </div>
-            <div class="col-lg-3">
-{#                {% for cat in cats|slice:"9:" %}#}
+            <div class="col-lg-3 block-lg">
+                {% for cat in cats|slice:"9:" %}
                     <div class="naprav-block" style="height: 94%">
-                        <a href="{% url 'app_clubs:list_clubs' cat=cats.9.0 %}" class="flipped-text text-decoration-none">{{ cats.9.1 }}</a>
+                        <a href="{% url 'app_clubs:list_clubs' cat=cats.9.0 %}"
+                           class="flipped-text text-decoration-none">{{ cats.9.1 }}</a>
+                    </div>
+                    <br>
+                {% endfor %}
+                <br>
+            </div>
+            <div class="col-lg-3 block-small">
+                {% for cat in cats|slice:"9:" %}
+                    <div class="naprav-block">
+                        <a href="{% url 'app_clubs:list_clubs' cat=cat.0 %}" class="">{{ cat.1 }}</a>
                     </div><br>
-{#                {% endfor %}#}
+                {% endfor %}
                 <br>
             </div>
         </div>

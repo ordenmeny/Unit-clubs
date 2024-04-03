@@ -2,15 +2,71 @@
 
 {% block content %}
 
-    {% for member in not_approved_members %}
+{#    {% for member in not_approved_members %}#}
+{##}
+{#        <h1>{{ member }}</h1>#}
+{#        <form method="post">#}
+{#            {% csrf_token %}#}
+{#            <input type="hidden" name="user_id" value="{{ member.id }}">#}
+{#            <button type="submit">Подтвердить</button>#}
+{#        </form>#}
+{##}
+{#    {% endfor %}#}
 
-        <h1>{{ member }}</h1>
-        <form method="post">
-            {% csrf_token %}
-            <input type="hidden" name="user_id" value="{{ member.id }}">
-            <button type="submit">Подтвердить</button>
-        </form>
 
-    {% endfor %}
+
+
+
+    <br>
+    <div class="container">
+        <h1 class="title-weight-section">Модерировать пользователей</h1><br>
+
+        <div class="list-group">
+            {% for member in not_approved_members %}
+                <div href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <p class="mb-1">{{ msg.text }}</p>
+                        <small class="text-body-secondary">{{ msg.timestamp }}</small>
+                    </div>
+                    <small class="text-body-secondary">Пользователь: {{ member }}</small><br>
+                    {#                    <a href="{% url 'app_clubs:delete_notifs' club_slug=msg.club.slug pk=msg.pk %}"#}
+                    {#                       class="text-decoration-none"><small style="" class="text-body-secondary">Удалить</small></a>#}
+                    <h1>{{ member }}</h1>
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="user_id" value="{{ member.id }}">
+                        <button type="submit" class="btn btn-link text-decoration-none text-body-secondary">Подтвердить</button>
+                    </form>
+
+                </div>
+
+                {#                <h1>{{ member }}</h1>#}
+                {#                <form method="post">#}
+                {#                    {% csrf_token %}#}
+                {#                    <input type="hidden" name="user_id" value="{{ member.id }}">#}
+                {#                    <button type="submit">Подтвердить</button>#}
+                {#                </form>#}
+
+            {% endfor %}
+
+
+
+            {% for msg in notifs %}
+                <div href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <p class="mb-1">{{ msg.text }}</p>
+                        <small class="text-body-secondary">{{ msg.timestamp }}</small>
+                    </div>
+                    <small class="text-body-secondary">Отправитель: {{ msg.sender.fio }}</small><br>
+                    <a href="{% url 'app_clubs:delete_notifs' club_slug=msg.club.slug pk=msg.pk %}"
+                       class="text-decoration-none"><small style="" class="text-body-secondary">Удалить</small></a>
+
+                </div>
+
+
+            {% endfor %}
+        </div>
+    </div>
+
 
 {% endblock %}

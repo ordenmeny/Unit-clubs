@@ -16,9 +16,6 @@
 {% load static %}
 
 {% block content %}
-    <a href="{% url 'app_clubs:home_page' %}" style="color: #101820">
-        <i class="bi bi-box-arrow-in-left" style="margin-left: 40px; font-size: 50px"></i>
-    </a>
     <style>
         html,
         body {
@@ -50,6 +47,10 @@
         }
     </style>
 
+    <a href="{% url 'app_clubs:home_page' %}" style="color: #101820" class="arrow-lg">
+        <i class="arrow-lg bi bi-box-arrow-in-left" style="margin-left: 40px; font-size: 50px"></i>
+    </a>
+
     <main style="height:{% if height %}{{ height }}{% else %}600px{% endif %}"
           class="block-opacity form-signin w-100 m-auto d-flex justify-content-center position-absolute top-50 start-50 translate-middle">
         <div>
@@ -62,15 +63,15 @@
                 {{ form.tg }}<br>
                 {{ form.desc }}<br>
 
-            {% if form.image %}
-{#                <p>Выбрать аватарку</p>#}
-                {{ form.image }} <br>
-            {% endif %}
+                {% if form.image %}
+                    {#                <p>Выбрать аватарку</p>#}
+                    {{ form.image }} <br>
+                {% endif %}
 
                 {{ form.password1 }}<br>
                 {{ form.password2 }} <br>
 
-            {{ form.errors }}
+                {{ form.errors }}
                 {% if type_btn %}
 
                     <button class="btn btn-secondary w-100 py-2" type="submit">{{ type_btn }}</button>
@@ -81,11 +82,16 @@
 
 
                 <br><br>
-                <a class="btn btn-outline-secondary w-100 py-2" href="{% url 'users:login' %}">Войти</a>
+                <a class="btn btn-outline-secondary w-100 py-2" href="{% url 'users:login' %}">Войти</a><br><br>
+                <a href="{% url 'app_clubs:home_page' %}" style="color: #101820" class="arrow-small">
+                    <i class="bi bi-box-arrow-in-left" style="font-size: 50px"></i>
+                </a>
             </form>
 
         </div>
+
     </main>
+
 
 
 {% endblock %}

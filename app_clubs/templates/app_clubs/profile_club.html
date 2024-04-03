@@ -41,19 +41,41 @@
 <hr>
 {% if request.user in current_club.admins.all %}
 <br>
-<div class="container">
-    <a class="btn btn-outline-secondary" href="{% url 'app_clubs:create_post' club_slug=current_club.slug %}">Создать
-        пост</a>
-    <a class="btn btn-outline-secondary" href="{% url 'app_clubs:create_event' club_slug=current_club.slug %}">Создать
-        событие</a>
-    <a class="btn btn-outline-secondary"
-       href="{% url 'app_clubs:approve_members' club_slug=current_club.slug %}">Подтвердить участников</a>
-    <a class="btn btn-outline-secondary"
-       href="{% url 'app_clubs:edit_club_profile' club_slug=current_club.slug %}">Редактировать профиль</a>
 
-    {# <a class="btn btn-outline-secondary" #}
-          {# href="{% url 'app_clubs:edit_club_profile' club_slug=current_club.slug %}">Сделать рассылку</a>#}
-</div><br>
+<div class="container">
+{#    <a class="btn btn-outline-secondary" href="{% url 'app_clubs:create_post' club_slug=current_club.slug %}">Создать#}
+{#        пост</a>#}
+{#    <a class="btn btn-outline-secondary" href="{% url 'app_clubs:create_event' club_slug=current_club.slug %}">Создать#}
+{#        событие</a>#}
+{#    <a class="btn btn-outline-secondary"#}
+{#       href="{% url 'app_clubs:approve_members' club_slug=current_club.slug %}">Подтвердить участников</a>#}
+{#    <a class="btn btn-outline-secondary"#}
+{#       href="{% url 'app_clubs:edit_club_profile' club_slug=current_club.slug %}">Редактировать профиль</a>#}
+
+{#</nav>#}
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page"
+       href="{% url 'app_clubs:create_post' club_slug=current_club.slug %}">Создать пост</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page"
+       href="{% url 'app_clubs:create_event' club_slug=current_club.slug %}">Создать событие</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page"
+       href="{% url 'app_clubs:approve_members' club_slug=current_club.slug %}">Модерация</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page"
+       href="{% url 'app_clubs:edit_club_profile' club_slug=current_club.slug %}">Редактировать профиль</a>
+  </li>
+</ul>
+
+</div>
+
+
+    <br>
 {% endif %}
 <div class="container">
 {#    <a class="btn btn-outline-secondary" href="{% url 'app_clubs:my_notifs' club_slug=current_club.slug %}">Мои#}
