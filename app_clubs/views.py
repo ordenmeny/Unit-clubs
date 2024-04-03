@@ -195,7 +195,7 @@ class CreateEvent(RequiredClubMember, DataMixin, CreateView):
     for_admin = True
 
     def form_valid(self, form):
-        form.instance.slug = slugify(form.instance.title)
+        # form.instance.slug = slugify(form.instance.title)
         current_club = self.request.current_club
         form.instance.club = current_club
         return super().form_valid(form)
