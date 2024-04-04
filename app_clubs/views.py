@@ -291,7 +291,8 @@ class UpdatePost(RequiredClubMember, UpdateView):
 
 class UpdateClubProfile(RequiredClubMember, UpdateView):
     model = Club
-    form_class = ClubForm
+    # form_class = ClubForm
+    fields = ('title', 'description', 'tg', 'cat', 'moderate', 'image', 'age')
     template_name = 'app_clubs/create_club.html'
     slug_url_kwarg = 'club_slug'
     for_admin = True

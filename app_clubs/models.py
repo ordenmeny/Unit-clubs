@@ -40,6 +40,12 @@ class BaseModel(models.Model):
 
 
 class Club(BaseModel):
+    ages_permis = (
+        ('with_out', 'Без возрастных ограничений'),
+        ('age1', '12+'),
+        ('age2', '16+'),
+        ('age3', '18+'),
+    )
     club = None
     title = models.CharField(max_length=128, verbose_name='Название')
     admins = models.ManyToManyField(get_user_model(), related_name='clubsadmins')
@@ -54,6 +60,7 @@ class Club(BaseModel):
                              verbose_name='Изображение')
     tg = models.CharField(max_length=256, null=True, blank=True, verbose_name='Телеграм')
     cat = models.CharField(max_length=64, choices=cats, verbose_name='Направления', null=True)
+    age = models.CharField(max_length=32, choices=ages_permis, verbose_name='Возрастные ограничения', null=True, blank=True, default='with_out')
 
     class Meta:
         verbose_name_plural = 'Клубы'

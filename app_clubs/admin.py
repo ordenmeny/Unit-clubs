@@ -10,8 +10,8 @@ class ClubAdmin(admin.ModelAdmin):
 
 
 class ClubAdmin2(admin.ModelAdmin):
-    list_display = ('title', 'slug')
-    list_display_links = ('title', 'slug')
+    list_display = ('title', 'slug', 'age')
+    list_display_links = ('title', 'slug', 'age')
 
 
 class NotifsAdmin(admin.ModelAdmin):
