@@ -336,4 +336,6 @@ class DetailEvent(RequiredClubMember, DetailView):
     slug_url_kwarg = ''
     template_name = 'app_clubs/detail_event.html'
 
-# new comment change
+
+def func(request):
+    pass
