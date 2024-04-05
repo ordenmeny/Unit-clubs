@@ -5,12 +5,42 @@
         <i class="bi bi-box-arrow-in-left" style="margin-left: 40px; font-size: 50px"></i>
     </a>
     <style>
-        html,
-        body {
-            height: 100%;
-            background-size: cover;
-            background-image: url({% static 'users/images/back_page_login.png' %});
+        @media screen and (min-width: 768px) {
+            html,
+            body {
+                height: 100%;
+                background-size: cover;
+                background-image: url({% static 'users/images/back_page_login.png' %});
+            }
+
+            .block-opacity {
+                background-color: rgba(170, 161, 161, 0.74) !important;
+                /*border: 1px solid */
+            }
+            .input-height {
+                height: 40px;
+                width: 450px;
+            }
         }
+
+        @media screen and (max-width: 767px) {
+            html,
+            body {
+                height: 100%;
+                background-size: cover;
+                background-color: rgba(170, 161, 161, 1) !important;
+            }
+
+            .input-height {
+                height: 40px;
+                width: 330px;
+            }
+
+            .block-opacity {
+                background-color: rgba(170, 161, 161, 1) !important;
+            }
+        }
+
 
         .form-signin {
             max-width: 530px;
@@ -34,8 +64,10 @@
             border-top-right-radius: 0;
         }
     </style>
-    <main class="main-block-login block-opacity form-signin w-100 m-auto d-flex justify-content-center position-absolute top-50 start-50 translate-middle">
-        <div>
+
+    <main style=""
+          class="main-block-login block-opacity form-signin w-100 m-auto d-flex justify-content-center position-absolute top-50 start-50 translate-middle">
+        <div class="">
             <form method="post">
                 {% csrf_token %}
                 <h1 class="h3 mb-3 fw-normal" style="color: #FFFFFF; font-weight: bold !important;">Давайте
@@ -49,6 +81,22 @@
 
         </div>
     </main>
+
+    {#    <main style="" class="">#}
+    {#        <div class="container">#}
+    {#            <form method="post">#}
+    {#                {% csrf_token %}#}
+    {#                <h1 class="h3 mb-3 fw-normal" style="color: #FFFFFF; font-weight: bold !important;">Давайте#}
+    {#                    начинать!</h1><br>#}
+    {#                {{ form.username }}<br>#}
+    {#                {{ form.password }}<br>#}
+    {#                <button class="btn btn-secondary w-100 py-2" type="submit">Войти</button>#}
+    {#                <br><br>#}
+    {#                <a class="btn btn-outline-secondary w-100 py-2" href="{% url 'users:signup' %}">Зарегистрироваться</a>#}
+    {#            </form>#}
+    {##}
+    {#        </div>#}
+    {#    </main>#}
 
 
 {% endblock %}
