@@ -12,6 +12,12 @@
     /*justify-content: flex-start;*/
 }
 
+@media screen and (max-width: 768px) {
+    .text-main-image-media{
+        font-size: 40px !important;
+    }
+}
+
 .container-photo-text {
     width: 50%;
     /*margin-left: 60px;*/
