@@ -335,7 +335,3 @@ class DetailEvent(RequiredClubMember, DetailView):
     context_object_name = 'event'
     slug_url_kwarg = ''
     template_name = 'app_clubs/detail_event.html'
-
-
-def func(request):
-    pass
