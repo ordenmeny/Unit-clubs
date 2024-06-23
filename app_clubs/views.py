@@ -49,7 +49,6 @@ class SendMsg(RequiredClubMember, DataMixin, CreateView):
     form_class = FormNotifs
     item_selected = 'my_msg'
 
-
     def get_success_url(self):
         messages.success(self.request, 'Сообщение отправлено')
         return reverse_lazy('app_clubs:profile_club', kwargs={'club_slug': self.kwargs['club_slug']})
@@ -132,6 +131,7 @@ class JoinClub(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         current_user = self.request.user
         current_club = Club.objects.get(slug=self.kwargs['club_slug'])
+        self.request.current_club = current_club
 
         if not current_club.moderate:
             # Если не нужно модерировать
@@ -150,6 +150,10 @@ class JoinClub(LoginRequiredMixin, FormView):
         return context
 
     def get_success_url(self):
+
+        if self.request.current_club in self.request.user.clubs.all():
+            return reverse_lazy('app_clubs:profile_club', kwargs={'club_slug': self.kwargs['club_slug']})
+
         messages.success(self.request, 'Вы были добавлены в клуб')
         return reverse_lazy('app_clubs:profile_club', kwargs={'club_slug': self.kwargs['club_slug']})
 
@@ -185,7 +189,6 @@ class ApproveMembers(RequiredClubMember, FormView, ListView):
     def get_success_url(self):
         messages.success(self.request, 'Вы добавили пользователя к клуб')
         return reverse_lazy('app_clubs:approve_members', kwargs={'club_slug': self.kwargs['club_slug']})
-
 
 
 class CreateEvent(RequiredClubMember, DataMixin, CreateView):
@@ -308,7 +311,6 @@ class MyNotifs(LoginRequiredMixin, DataMixin, ListView):
     model = Notifs
     item_selected = 'my_msg'
 
-
     def get_queryset(self):
         return Notifs.objects.filter(receiver=self.request.user)
 
@@ -327,7 +329,6 @@ class DeleteNotifs(RequiredClubMember, DeleteView):
             return redirect(reverse_lazy('app_clubs:page_error', kwargs={'type_error': '403'}))
 
         return super().dispatch(request, *args, **kwargs)
-
 
 
 class DetailEvent(RequiredClubMember, DetailView):
